@@ -40,4 +40,7 @@ MemberSchoolPageSubscribe
 - [x] 회원가입
   - [x] 패스워드 해싱
   - [x] 이메일 암호화
-- [ ] 로그인
+- [x] 로그인
+  - [x] 토큰 발급
+  - [x] 토큰 검증 (AuthGuard)
+- [x] .env 파일에 설정 정보 저장

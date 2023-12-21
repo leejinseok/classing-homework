@@ -8,5 +8,5 @@ services:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: classting-homework
+      MYSQL_DATABASE: classting_homework
       TZ: Asia/Seoul

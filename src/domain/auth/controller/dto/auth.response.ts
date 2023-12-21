@@ -13,3 +13,16 @@ export class SignUpResposne {
     return response;
   }
 }
+
+export class TokenResponse {
+  accessToken: string
+  refreshToken: string
+
+  static of(accessToken: string, refreshToken: string) {
+    const response = new TokenResponse()
+    response.accessToken = accessToken;
+    response.refreshToken = refreshToken;
+    return response;
+  }
+
+}

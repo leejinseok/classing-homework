@@ -8,9 +8,7 @@ export class MemberService {
   constructor(
     @Inject(MEMBER_REPOSITORY)
     private memberRepository: Repository<Member>,
-  ) {}
+  ) { }
 
-  findAll(): Member[] {
-    return [new Member()];
-  }
+
 }

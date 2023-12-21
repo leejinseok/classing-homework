@@ -16,7 +16,7 @@ export class AuthService {
   constructor(
     @Inject(MEMBER_REPOSITORY)
     private readonly memberRepository: Repository<Member>,
-  ) {}
+  ) { }
 
   async signUp(request: SignUpRequest): Promise<Member> {
     const { hash, salt } = await BcryptUtils.hash(request.password);
@@ -51,4 +51,6 @@ export class AuthService {
 
     return member;
   }
+
+
 }
