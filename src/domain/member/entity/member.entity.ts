@@ -35,10 +35,12 @@ export class Member extends Common {
   })
   schoolPages: SchoolPage[];
 
-  static create(dto: SignUpRequest): Member {
+  static create(request: SignUpRequest): Member {
     const member = new Member();
-    member.name = dto.name;
-    member.role = dto.role;
+    member.email = request.email;
+    member.name = request.name;
+    member.password = request.password;
+    member.role = request.role;
     return member;
   }
 }

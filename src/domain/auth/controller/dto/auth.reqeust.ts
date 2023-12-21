@@ -7,4 +7,7 @@ export class SignUpRequest {
   role: MemberRole;
 }
 
-export class LoginRequest {}
+export class LoginRequest {
+  email: string;
+  password: string;
+}
