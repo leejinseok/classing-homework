@@ -113,6 +113,7 @@ export class SchoolPageNewsService {
       .where('schoolPage.id = :schoolPageId', { schoolPageId })
       .offset(page * size)
       .limit(size)
+      .orderBy('news.createdAt', 'DESC')
       .getManyAndCount();
   }
 
