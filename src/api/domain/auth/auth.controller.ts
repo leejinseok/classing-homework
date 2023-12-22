@@ -4,7 +4,9 @@ import { LoginRequest, SignUpRequest } from './dto/auth.reqeust';
 import { SignUpResposne, TokenResponse } from './dto/auth.response';
 import { JwtService } from '@nestjs/jwt';
 import { Public } from 'src/api/config/metadata';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Auth (인증)')
 @Controller('/api/v1/auth')
 export class AuthController {
   constructor(

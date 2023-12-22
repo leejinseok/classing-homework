@@ -13,7 +13,9 @@ import { Roles } from 'src/api/config/metadata';
 import { MemberRole } from 'src/core/db/domain/member/member.entity';
 import { SchoolPageResponse } from './dto/school-page.response';
 import { JwtPayload } from '../auth/dto/jwt-payload';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('SchoolPage (학교페이지)')
 @Controller('/api/v1/school-pages')
 export class SchoolPageController {
   constructor(private readonly schoolPageService: SchoolPageService) {}

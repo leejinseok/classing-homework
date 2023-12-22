@@ -16,7 +16,9 @@ import {
 } from './dto/school-page-news.request';
 import { SchoolPageNewsResponse } from './dto/school-page-news.response';
 import { SchoolPageNewsService } from './school-page-news.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('SchoolPage News (학교페이지 소식)')
 @Controller('/api/v1/school-page-news')
 export class SchoolPageNewsController {
   constructor(private readonly schoolPageNewsService: SchoolPageNewsService) {}
