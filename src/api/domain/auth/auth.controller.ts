@@ -24,8 +24,8 @@ export class AuthController {
   async login(@Body() request: LoginRequest): Promise<TokenResponse> {
     const member = await this.authService.login(request);
 
-    const { id, name } = member;
-    const payload = { name };
+    const { id, name, role } = member;
+    const payload = { name, role };
     const subject = `${id}`;
 
     // accessToken

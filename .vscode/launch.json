@@ -5,15 +5,18 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "command": "npm run start",
-      "name": "Run npm start",
+      "type": "node",
       "request": "launch",
-      "type": "node-terminal"
+      "name": "start simple",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start"],
+      "sourceMaps": true,
+      "console": "integratedTerminal"
     },
     {
       "type": "node",
       "request": "launch",
-      "name": "Debug Nest Framework",
+      "name": "start",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "start", "--", "--inspect-brk"],
       "autoAttachChildProcesses": true,
