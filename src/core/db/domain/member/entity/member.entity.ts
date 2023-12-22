@@ -1,7 +1,7 @@
-import { Common } from 'src/core/common/database.common.entity';
 import { SignUpRequest } from 'src/api/domain/auth/dto/auth.reqeust';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { SchoolPage } from '../../school-page/entity/school-page.entity';
+import { Common } from 'src/core/db/database.common.entity';
 
 export enum MemberRole {
   ADMIN = 'ADMIN',

@@ -8,8 +8,8 @@ import { Repository } from 'typeorm';
 import { LoginRequest, SignUpRequest } from './dto/auth.reqeust';
 import { BcryptUtils } from 'src/util/bcrypt.util';
 import { EncryptUtils } from 'src/util/encrypt.util';
-import { MEMBER_REPOSITORY } from 'src/core/domain/member/provider/member.providers';
-import { Member } from 'src/core/domain/member/entity/member.entity';
+import { MEMBER_REPOSITORY } from 'src/core/db/domain/member/provider/member.providers';
+import { Member } from 'src/core/db/domain/member/entity/member.entity';
 
 @Injectable()
 export class AuthService {

@@ -1,6 +1,6 @@
-import { Common } from 'src/core/common/database.common.entity';
 import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Member } from '../../member/entity/member.entity';
+import { Common } from 'src/core/db/database.common.entity';
 
 @Entity()
 export class SchoolPage extends Common {
