@@ -15,6 +15,8 @@ import { SCHOOL_PAGE_REPOSITORY } from 'src/core/db/domain/school-page/school-pa
 import { SchoolPage } from 'src/core/db/domain/school-page/school-page.entity';
 import { ErrorMessage } from 'src/api/config/constants';
 import { CommonStatus } from 'src/core/db/database.common.entity';
+import { SCHOOL_PAGE_NEWS_REPOSITORY } from 'src/core/db/domain/school-page-news/school-page-news.providers';
+import { SchoolPageNews } from 'src/core/db/domain/school-page-news/school-page-news.entity';
 
 @Injectable()
 export class MemberService {
@@ -25,6 +27,8 @@ export class MemberService {
     private memberSchoolPageSubscribeRepository: Repository<MemberSchoolPageSubscribe>,
     @Inject(SCHOOL_PAGE_REPOSITORY)
     private schoolPageRepository: Repository<SchoolPage>,
+    @Inject(SCHOOL_PAGE_NEWS_REPOSITORY)
+    private schoolPageNewsRepository: Repository<SchoolPageNews>,
   ) {}
 
   async subscribeSchoolPage(schoolPageId: number, memberId: number) {

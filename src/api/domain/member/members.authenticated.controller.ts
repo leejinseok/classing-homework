@@ -56,4 +56,10 @@ export class MembersAuthenticatedController {
       ),
     );
   }
+
+  @Get('/school-pages/:schoolPageId/news')
+  async getSchoolPageNews(
+    @Param('schoolPageId') schoolPageId: number,
+    @Request() req,
+  ) {}
 }

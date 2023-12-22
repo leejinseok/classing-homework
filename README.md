@@ -6,7 +6,7 @@
 
 ### Core
 
-Entity
+**DB**
 
 SchoolPage
 
@@ -17,7 +17,7 @@ SchoolPage
 SchoolPageNewsFeed
 
 - id
-- schoolId
+- schoolPageId
 - createdBy
 - content
 
@@ -31,7 +31,7 @@ MemberSchoolPageSubscribe
 
 - id
 - memberId
-- schoolId
+- schoolPageId
 - subscribedAt
 - unsubscribedAt
 
@@ -58,5 +58,5 @@ MemberSchoolPageSubscribe
 - [ ] 학생회원
   - [x] 학생회원 > 학교페이지 구독
   - [x] 학생회원 > 학교페이지 구독 취소
-  - [ ] 학생회원 > 학교페이지 목록 (구독중)
+  - [x] 학생회원 > 학교페이지 목록 (구독중)
   - [ ] 학생회원 > 학교페이지 소식 목록 (최신순)

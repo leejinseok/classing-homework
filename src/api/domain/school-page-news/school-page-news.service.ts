@@ -101,6 +101,21 @@ export class SchoolPageNewsService {
     return schoolPageNews;
   }
 
+  findSchoolPageNews(
+    page: number,
+    size: number,
+    schoolPageId: number,
+  ): Promise<[SchoolPageNews[], number]> {
+    return this.schoolPageNewsRepository
+      .createQueryBuilder('news')
+      .innerJoin('news.schoolPage', 'schoolPage')
+      .select(['news', 'schoolPage.id'])
+      .where('schoolPage.id = :schoolPageId', { schoolPageId })
+      .offset(page * size)
+      .limit(size)
+      .getManyAndCount();
+  }
+
   async delete(schoolPageNewsId: number, memberId: number): Promise<any> {
     const schoolPageNews = await this.schoolPageNewsRepository.findOne({
       where: {
