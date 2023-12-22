@@ -39,7 +39,7 @@ export class SchoolPageNewsController {
   @Roles(MemberRole.ADMIN)
   @Patch('/:schoolPageNewsId')
   async updateSchoolPageNews(
-    @Param('schoolPageNewsId') schoolPageNewsId: bigint,
+    @Param('schoolPageNewsId') schoolPageNewsId: number,
     @Body() schoolPageNewsUpdateRequest: SchoolPageNewsUpdateRequest,
     @Request() req,
   ): Promise<SchoolPageNewsResponse> {
@@ -55,7 +55,7 @@ export class SchoolPageNewsController {
   @Roles(MemberRole.ADMIN)
   @Delete('/:schoolPageNewsId')
   async delete(
-    @Param('schoolPageNewsId') schoolPageNewsId: bigint,
+    @Param('schoolPageNewsId') schoolPageNewsId: number,
     @Request() req,
   ) {
     const user: JwtPayload = req.user;

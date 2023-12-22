@@ -1,5 +1,5 @@
 export class SchoolPageNewsRequest {
-  schoolPageId: bigint;
+  schoolPageId: number;
   content: string;
 }
 

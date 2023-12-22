@@ -35,7 +35,7 @@ export class SchoolPageController {
   @Roles(MemberRole.ADMIN)
   @Patch('/:schoolPageId')
   async updateSchoolPage(
-    @Param('schoolPageId') schoolPageId: bigint,
+    @Param('schoolPageId') schoolPageId: number,
     @Body() schoolPageRequest: SchoolPageRequest,
     @Request() req,
   ): Promise<SchoolPageResponse> {
@@ -51,7 +51,7 @@ export class SchoolPageController {
   @Roles(MemberRole.ADMIN)
   @Delete('/:schoolPageId')
   async deleteSchoolPage(
-    @Param('schoolPageId') schoolPageId: bigint,
+    @Param('schoolPageId') schoolPageId: number,
     @Request() req,
   ) {
     const user: JwtPayload = req.user;

@@ -11,8 +11,8 @@ import { Member } from '../member/member.entity';
 
 @Entity()
 export class SchoolPageNews extends Common {
-  @PrimaryGeneratedColumn()
-  id: bigint;
+  @PrimaryGeneratedColumn({ type: 'bigint' })
+  id: number;
 
   @Column({ type: 'text' })
   content: string;

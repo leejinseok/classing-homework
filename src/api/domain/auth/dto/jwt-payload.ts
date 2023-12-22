@@ -5,5 +5,5 @@ export interface JwtPayload {
   iat: number;
   name: string;
   role: MemberRole;
-  sub: bigint;
+  sub: number;
 }

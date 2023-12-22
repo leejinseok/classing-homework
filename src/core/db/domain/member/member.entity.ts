@@ -12,8 +12,8 @@ export enum MemberRole {
 
 @Entity()
 export class Member extends Common {
-  @PrimaryGeneratedColumn()
-  id: bigint;
+  @PrimaryGeneratedColumn({ type: 'bigint' })
+  id: number;
 
   @Column({ type: 'varchar', length: 100 })
   email!: string;

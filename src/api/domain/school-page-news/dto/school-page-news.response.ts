@@ -1,9 +1,9 @@
 import { SchoolPageNews } from 'src/core/db/domain/school-page-news/school-page-news.entity';
 
 export class SchoolPageNewsResponse {
-  id: bigint;
+  id: number;
   content: string;
-  schoolPageId: bigint;
+  schoolPageId: number;
   createdAt: Date;
   updatedAt: Date;
 

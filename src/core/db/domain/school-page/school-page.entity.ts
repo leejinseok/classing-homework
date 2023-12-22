@@ -12,8 +12,8 @@ import { Common, CommonStatus } from 'src/core/db/database.common.entity';
 @Entity()
 @Unique('uidx_school_page_1', ['schoolName', 'region'])
 export class SchoolPage extends Common {
-  @PrimaryGeneratedColumn()
-  id: bigint;
+  @PrimaryGeneratedColumn({ type: 'bigint' })
+  id: number;
 
   @Column({ type: 'varchar', length: 50 })
   schoolName: string;
@@ -50,5 +50,9 @@ export class SchoolPage extends Common {
 
   doesMemberCreated(member: Member): boolean {
     return member.id === this.createdBy.id;
+  }
+
+  doesMemberCreatedById(memberId: number) {
+    return memberId === this.createdBy.id;
   }
 }

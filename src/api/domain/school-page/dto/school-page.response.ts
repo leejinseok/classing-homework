@@ -1,7 +1,7 @@
 import { SchoolPage } from 'src/core/db/domain/school-page/school-page.entity';
 
 export class SchoolPageResponse {
-  id: bigint;
+  id: number;
   schoolName: string;
   region: string;
   createdAt: Date;

@@ -1,7 +1,7 @@
 import { Member, MemberRole } from 'src/core/db/domain/member/member.entity';
 
 export class SignUpResposne {
-  id: bigint;
+  id: number;
   name: string;
   role: MemberRole;
 

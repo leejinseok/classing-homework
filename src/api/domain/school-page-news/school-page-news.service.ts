@@ -31,22 +31,26 @@ export class SchoolPageNewsService {
 
   async save(
     request: SchoolPageNewsRequest,
-    createdBy: bigint,
+    createdBy: number,
   ): Promise<SchoolPageNews> {
     const schoolPageId = request.schoolPageId;
     const schoolPage = await this.findSchoolPageOneOnlyActiveById(schoolPageId);
+
+    if (schoolPage === null) {
+      throw new NotFoundException(ErrorMessage.NOT_FOUND_SCHOOL_PAGE_MESSAGE);
+    }
+
+    if (!schoolPage.doesMemberCreatedById(createdBy)) {
+      throw new ForbiddenException(
+        '해당 학교페이지에 소식을 작성 할수 있는 권한이 없습니다.',
+      );
+    }
 
     const member = await this.memberRepository.findOne({
       where: {
         id: createdBy,
       },
     });
-    if (!schoolPage.doesMemberCreated(member)) {
-      throw new ForbiddenException(
-        '해당 학교페이지에 소식을 작성 할수 있는 권한이 없습니다.',
-      );
-    }
-
     const { content } = request;
     const newSchoolPageNews = SchoolPageNews.of(content, schoolPage, member);
 
@@ -55,9 +59,9 @@ export class SchoolPageNewsService {
   }
 
   async update(
-    schoolPageNewsId: bigint,
+    schoolPageNewsId: number,
     request: SchoolPageNewsUpdateRequest,
-    memberId: bigint,
+    memberId: number,
   ): Promise<SchoolPageNews> {
     const { content } = request;
 
@@ -77,16 +81,11 @@ export class SchoolPageNewsService {
       );
     }
 
-    const member = await this.memberRepository.findOne({
-      where: {
-        id: memberId,
-      },
-      select: {
-        id: true,
-      },
-    });
+    if (schoolPageNews.schoolPage.status === CommonStatus.DELETED) {
+      throw new NotFoundException(ErrorMessage.NOT_FOUND_SCHOOL_PAGE_MESSAGE);
+    }
 
-    if (schoolPageNews.createdBy.id !== member.id) {
+    if (schoolPageNews.createdBy.id !== memberId) {
       throw new ForbiddenException(
         '해당 학교페이지의 소식을 수정 할수 있는 권한이 없습니다.',
       );
@@ -102,13 +101,14 @@ export class SchoolPageNewsService {
     return schoolPageNews;
   }
 
-  async delete(schoolPageNewsId: bigint, memberId: bigint): Promise<any> {
+  async delete(schoolPageNewsId: number, memberId: number): Promise<any> {
     const schoolPageNews = await this.schoolPageNewsRepository.findOne({
       where: {
         id: schoolPageNewsId,
       },
       relations: {
         createdBy: true,
+        schoolPage: true,
       },
     });
 
@@ -118,16 +118,11 @@ export class SchoolPageNewsService {
       );
     }
 
-    const member = await this.memberRepository.findOne({
-      where: {
-        id: memberId,
-      },
-      select: {
-        id: true,
-      },
-    });
+    if (schoolPageNews.schoolPage.status === CommonStatus.DELETED) {
+      throw new NotFoundException(ErrorMessage.NOT_FOUND_SCHOOL_PAGE_MESSAGE);
+    }
 
-    if (schoolPageNews.createdBy.id !== member.id) {
+    if (schoolPageNews.createdBy.id !== memberId) {
       throw new ForbiddenException(
         '해당 학교페이지의 소식을 삭제할 수 있는 권한이 없습니다.',
       );
@@ -138,7 +133,7 @@ export class SchoolPageNewsService {
     });
   }
 
-  async findSchoolPageOneOnlyActiveById(id: bigint) {
+  async findSchoolPageOneOnlyActiveById(id: number) {
     return this.schoolPageRepository.findOne({
       where: {
         id,

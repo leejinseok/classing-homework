@@ -9,4 +9,6 @@ export class MemberService {
     @Inject(MEMBER_REPOSITORY)
     private memberRepository: Repository<Member>,
   ) {}
+
+  subscribeSchoolPage(schoolPageId: number, memberId: bigint) {}
 }

@@ -22,12 +22,25 @@ export class SchoolPageService {
     private readonly memberRepository: Repository<Member>,
   ) {}
 
+  private async findMemberById(memberId: number): Promise<Member> {
+    const member = await this.memberRepository.findOne({
+      where: {
+        id: memberId,
+      },
+    });
+
+    if (member === null) {
+      throw new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER_MESSAGE);
+    }
+
+    return member;
+  }
+
   async save(
     request: SchoolPageRequest,
-    memberId: bigint,
+    memberId: number,
   ): Promise<SchoolPage> {
     const member = await this.findMemberById(memberId);
-
     const schoolPage = SchoolPage.create(
       request.schoolName,
       request.region,
@@ -40,12 +53,11 @@ export class SchoolPageService {
 
   async update(
     request: SchoolPageRequest,
-    schoolPageId: bigint,
-    memberId: bigint,
+    schoolPageId: number,
+    memberId: number,
   ): Promise<any> {
-    const member = await this.findMemberById(memberId);
     const schoolPage = await this.findOnlyActiveById(schoolPageId);
-    const doesMemberCreated = schoolPage.doesMemberCreated(member);
+    const doesMemberCreated = schoolPage.doesMemberCreatedById(memberId);
 
     if (!doesMemberCreated) {
       throw new ForbiddenException(
@@ -57,7 +69,7 @@ export class SchoolPageService {
     return schoolPage;
   }
 
-  async findOnlyActiveById(schoolPageId: bigint): Promise<SchoolPage> {
+  async findOnlyActiveById(schoolPageId: number): Promise<SchoolPage> {
     const schoolPage = await this.schoolPageRepository.findOne({
       where: {
         id: schoolPageId,
@@ -75,11 +87,10 @@ export class SchoolPageService {
     return schoolPage;
   }
 
-  async delete(schoolPageId: bigint, memberId: bigint) {
-    const member = await this.findMemberById(memberId);
+  async delete(schoolPageId: number, memberId: number) {
     const schoolPage = await this.findOnlyActiveById(schoolPageId);
 
-    const doseMemberCreated = schoolPage.doesMemberCreated(member);
+    const doseMemberCreated = schoolPage.doesMemberCreatedById(memberId);
     if (!doseMemberCreated) {
       throw new ForbiddenException(
         '학교페이지 삭제는 해당 페이지를 개설한 사용자만 가능합니다',
@@ -87,27 +98,6 @@ export class SchoolPageService {
     }
 
     schoolPage.delete();
-    this.schoolPageRepository.update(
-      {
-        id: schoolPageId,
-      },
-      {
-        ...schoolPage,
-      },
-    );
-  }
-
-  private async findMemberById(memberId: bigint): Promise<Member> {
-    const member = await this.memberRepository.findOne({
-      where: {
-        id: memberId,
-      },
-    });
-
-    if (member === null) {
-      throw new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER_MESSAGE);
-    }
-
-    return member;
+    this.schoolPageRepository.update({ id: schoolPageId }, { ...schoolPage });
   }
 }
