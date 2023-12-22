@@ -1,5 +1,10 @@
 import { Repository } from 'typeorm';
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import {
   MEMBER_REPOSITORY,
   MEMBER_SCHOOL_PAGE_SUBSCRIBE_REPOSITORY,
@@ -9,6 +14,7 @@ import { MemberSchoolPageSubscribe } from 'src/core/db/domain/member/member-scho
 import { SCHOOL_PAGE_REPOSITORY } from 'src/core/db/domain/school-page/school-page.providers';
 import { SchoolPage } from 'src/core/db/domain/school-page/school-page.entity';
 import { ErrorMessage } from 'src/api/config/constants';
+import { CommonStatus } from 'src/core/db/database.common.entity';
 
 @Injectable()
 export class MemberService {
@@ -42,6 +48,19 @@ export class MemberService {
       throw new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER_MESSAGE);
     }
 
+    const duplicated = await this.memberSchoolPageSubscribeRepository
+      .createQueryBuilder('subscribe')
+      .leftJoin('subscribe.schoolPage', 'schoolPage')
+      .leftJoin('subscribe.member', 'member')
+      .where('subscribe.schoolPage.id = :schoolPageId', { schoolPageId })
+      .andWhere('subscribe.member.id = :memberId', { memberId })
+      .andWhere('subscribe.status = :status', { status: CommonStatus.ACTIVE })
+      .getCount();
+
+    if (duplicated) {
+      throw new ConflictException('이미 구독한 학교페이지입니다.');
+    }
+
     const memberSchoolPageSubscribe = MemberSchoolPageSubscribe.of(
       member,
       schoolPage,
@@ -49,6 +68,28 @@ export class MemberService {
 
     await this.memberSchoolPageSubscribeRepository.save(
       memberSchoolPageSubscribe,
+    );
+  }
+
+  async unsubscribeSchoolPage(schoolPageId: number, memberId: number) {
+    const subscribe = await this.memberSchoolPageSubscribeRepository
+      .createQueryBuilder('subscribe')
+      .leftJoinAndSelect('subscribe.schoolPage', 'schoolPage')
+      .leftJoinAndSelect('subscribe.member', 'member')
+      .where('subscribe.schoolPage.id = :schoolPageId', { schoolPageId })
+      .andWhere('subscribe.member.id = :memberId', { memberId })
+      .getOne();
+
+    subscribe.unsubscribe();
+
+    await this.memberSchoolPageSubscribeRepository.update(
+      {
+        id: subscribe.id,
+      },
+      {
+        unsubscribedAt: subscribe.unsubscribedAt,
+        status: subscribe.status,
+      },
     );
   }
 }

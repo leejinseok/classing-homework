@@ -1,7 +1,8 @@
 import { SignUpRequest } from 'src/api/domain/auth/dto/auth.reqeust';
+import { Common } from 'src/core/db/database.common.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { SchoolPage } from '../school-page/school-page.entity';
-import { Common } from 'src/core/db/database.common.entity';
+import { MemberSchoolPageSubscribe } from './member-schoolPage-subscribe.entity';
 
 export enum MemberRole {
   ADMIN = 'ADMIN',
@@ -34,6 +35,15 @@ export class Member extends Common {
     lazy: true,
   })
   schoolPages: SchoolPage[];
+
+  @OneToMany(
+    () => MemberSchoolPageSubscribe,
+    (memberSchoolPageSubscribe) => memberSchoolPageSubscribe.member,
+    {
+      lazy: true,
+    },
+  )
+  schoolPagesSubscribed: SchoolPage[];
 
   static create(request: SignUpRequest): Member {
     const member = new Member();

@@ -15,6 +15,7 @@ import { SchoolPageNewsController } from './domain/school-page-news/school-page-
 import { SchoolPageNewsService } from './domain/school-page-news/school-page-news.service';
 import { SchoolPageController } from './domain/school-page/school-page.controller';
 import { SchoolPageService } from './domain/school-page/school-page.service';
+import { MembersAuthenticatedController } from './domain/member/members.authenticated.controller';
 
 const appFilter = {
   provide: APP_FILTER,
@@ -45,6 +46,7 @@ const jwtModule = () => {
   controllers: [
     AuthController,
     MembersController,
+    MembersAuthenticatedController,
     SchoolPageController,
     SchoolPageNewsController,
   ],
