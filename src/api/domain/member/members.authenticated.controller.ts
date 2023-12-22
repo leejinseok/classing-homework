@@ -1,4 +1,14 @@
-import { Controller, Get, Param, Post, Request } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  Request,
+} from '@nestjs/common';
+import { PageResponse } from 'src/common/dto/page.response';
+import { SchoolPageResponse } from '../school-page/dto/school-page.response';
 import { MemberService } from './member.service';
 
 @Controller('/api/v1/members/authenticated')
@@ -16,11 +26,34 @@ export class MembersAuthenticatedController {
     await this.memberService.subscribeSchoolPage(schoolPageId, req.user.sub);
   }
 
-  @Post('/school-pages/:schoolPageId/unsubscribe')
+  @Patch('/school-pages/:schoolPageId/unsubscribe')
   async unsubscribeSchoolPage(
     @Param('schoolPageId') schoolPageId: number,
     @Request() req,
   ) {
     await this.memberService.unsubscribeSchoolPage(schoolPageId, req.user.sub);
+  }
+
+  @Get('/school-pages/subscribed')
+  async getSchoolPagesSubscribed(
+    @Query('page') page: number,
+    @Query('size') size: number,
+    @Request() req,
+  ): Promise<PageResponse<SchoolPageResponse>> {
+    const schoolPagesSubscribed =
+      await this.memberService.findSchoolPagesSubscribed(
+        page,
+        size,
+        req.user.sub,
+      );
+
+    return new PageResponse(
+      schoolPagesSubscribed[1],
+      page,
+      size,
+      schoolPagesSubscribed[0].map((schoolPageSubscribed) =>
+        SchoolPageResponse.create(schoolPageSubscribed.schoolPage),
+      ),
+    );
   }
 }

@@ -50,6 +50,7 @@ export class MemberService {
 
     const duplicated = await this.memberSchoolPageSubscribeRepository
       .createQueryBuilder('subscribe')
+      .select('subscribe.id')
       .leftJoin('subscribe.schoolPage', 'schoolPage')
       .leftJoin('subscribe.member', 'member')
       .where('subscribe.schoolPage.id = :schoolPageId', { schoolPageId })
@@ -91,5 +92,20 @@ export class MemberService {
         status: subscribe.status,
       },
     );
+  }
+
+  async findSchoolPagesSubscribed(
+    page: number,
+    size: number,
+    memberId: number,
+  ) {
+    return this.memberSchoolPageSubscribeRepository
+      .createQueryBuilder('subscribe')
+      .innerJoinAndSelect('subscribe.schoolPage', 'schoolPage')
+      .innerJoin('subscribe.member', 'member')
+      .where('member.id = :memberId', { memberId })
+      .offset(page * size)
+      .limit(size)
+      .getManyAndCount();
   }
 }
