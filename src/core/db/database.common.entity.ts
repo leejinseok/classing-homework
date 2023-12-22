@@ -11,3 +11,9 @@ export abstract class Common {
   })
   updatedAt: Date;
 }
+
+export enum CommonStatus {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+  DELETED = 'DELETED',
+}

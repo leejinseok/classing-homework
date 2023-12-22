@@ -7,7 +7,7 @@ import {
   Unique,
 } from 'typeorm';
 import { Member } from '../../member/entity/member.entity';
-import { Common } from 'src/core/db/database.common.entity';
+import { Common, CommonStatus } from 'src/core/db/database.common.entity';
 
 @Entity()
 @Unique('uidx_school_page_1', ['schoolName', 'region'])
@@ -28,11 +28,27 @@ export class SchoolPage extends Common {
   })
   createdBy: Member;
 
+  @Column({ type: 'varchar', length: 30, default: CommonStatus.ACTIVE })
+  status: CommonStatus;
+
   static create(schoolName: string, region: string, createdBy: Member) {
     const schoolPage = new SchoolPage();
     schoolPage.schoolName = schoolName;
     schoolPage.region = region;
     schoolPage.createdBy = createdBy;
     return schoolPage;
+  }
+
+  update(schoolName: string, region: string) {
+    this.schoolName = schoolName;
+    this.region = region;
+  }
+
+  delete() {
+    this.status = CommonStatus.DELETED;
+  }
+
+  doesMemberCreated(member: Member): boolean {
+    return member.id === this.createdBy.id;
   }
 }
