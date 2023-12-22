@@ -10,7 +10,7 @@ import {
 import { SchoolPageService } from './school-page.service';
 import { SchoolPageRequest } from './dto/school-page.request';
 import { Roles } from 'src/api/config/metadata';
-import { MemberRole } from 'src/core/db/domain/member/entity/member.entity';
+import { MemberRole } from 'src/core/db/domain/member/member.entity';
 import { SchoolPageResponse } from './dto/school-page.response';
 import { JwtPayload } from '../auth/dto/jwt-payload';
 

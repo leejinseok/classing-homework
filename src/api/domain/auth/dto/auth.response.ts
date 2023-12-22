@@ -1,7 +1,4 @@
-import {
-  Member,
-  MemberRole,
-} from 'src/core/db/domain/member/entity/member.entity';
+import { Member, MemberRole } from 'src/core/db/domain/member/member.entity';
 
 export class SignUpResposne {
   id: bigint;

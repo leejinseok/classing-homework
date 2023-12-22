@@ -4,10 +4,10 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Member } from 'src/core/db/domain/member/entity/member.entity';
-import { MEMBER_REPOSITORY } from 'src/core/db/domain/member/provider/member.providers';
-import { SchoolPage } from 'src/core/db/domain/school-page/entity/school-page.entity';
-import { SCHOOL_PAGE_REPOSITORY } from 'src/core/db/domain/school-page/provider/school-page.providers';
+import { Member } from 'src/core/db/domain/member/member.entity';
+import { MEMBER_REPOSITORY } from 'src/core/db/domain/member/member.providers';
+import { SchoolPage } from 'src/core/db/domain/school-page/school-page.entity';
+import { SCHOOL_PAGE_REPOSITORY } from 'src/core/db/domain/school-page/school-page.providers';
 import { Repository } from 'typeorm';
 import { SchoolPageRequest } from './dto/school-page.request';
 import { ErrorMessage } from 'src/api/config/constants';

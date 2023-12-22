@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
-import { Member } from '../../member/entity/member.entity';
+import { Member } from '../member/member.entity';
 import { Common, CommonStatus } from 'src/core/db/database.common.entity';
 
 @Entity()

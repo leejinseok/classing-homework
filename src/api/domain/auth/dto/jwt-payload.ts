@@ -1,4 +1,4 @@
-import { MemberRole } from 'src/core/db/domain/member/entity/member.entity';
+import { MemberRole } from 'src/core/db/domain/member/member.entity';
 
 export interface JwtPayload {
   exp: number;

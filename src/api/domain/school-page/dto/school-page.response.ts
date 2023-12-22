@@ -1,4 +1,4 @@
-import { SchoolPage } from 'src/core/db/domain/school-page/entity/school-page.entity';
+import { SchoolPage } from 'src/core/db/domain/school-page/school-page.entity';
 
 export class SchoolPageResponse {
   id: bigint;
