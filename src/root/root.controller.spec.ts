@@ -16,7 +16,7 @@ describe('RootController', () => {
     expect(controller).toBeDefined();
   });
 
-  describe('getRoot', () => {
+  describe('getHello', () => {
     it('shoud response is hello', async () => {
       const response = await controller.getHello();
       expect(response).toEqual('hello');
