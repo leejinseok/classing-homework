@@ -1,8 +1,35 @@
 클래스팅 백엔드 과제 (이진석)
 
-## Overview
+## 🏠 Overview
 
-## Structure
+**소감**
+
+주 언어가 spring boot여서 고민이 많았지만 클래스팅에서 표준으로 사용하고 있는 nestjs를 사용해보았는데, spring과 유사한 점이 많아서 개발하는데 크게 어렵지 않았다. nestjs가 최근 우아한형제들에서도 spring과 함께 백엔드 표준으로 자리를 잡았다고 하는데 장점이 많은 것 같았고 이번 기회에 배울 수 있어서 좋은 기회였던거 같다
+
+## 🏛️ Structure
+
+### Api
+
+Auth
+
+- AuthController
+- AuthService
+
+SchoolPage
+
+- SchoolPageController
+- SchoolPageService
+
+SchoolPageNews
+
+- SchoolPageNewsController
+- SchoolPageNewsService
+
+Member
+
+- MemberController
+- MemberAuthenticatedController (인증 된 사용자 전용)
+- MemberService
 
 ### Core
 
@@ -35,7 +62,16 @@ MemberSchoolPageSubscribe
 - subscribedAt
 - unsubscribedAt
 
-## Run Application
+## 🎢 Tech Stack
+
+- node 21.4.0
+- npm 10.2.4
+- mysql
+- swagger
+- jwt
+- jest
+
+## 🏃 Run Application
 
 ```shellscript
 docker-compose docker/docker-compose-local.yml up -d
@@ -43,7 +79,7 @@ npm install
 npm run start
 ```
 
-## TODO
+## 👷 TODO
 
 - [x] 회원가입
 
@@ -82,7 +118,7 @@ npm run start
 - [ ] 테스트코드
   - [x] root controller 테스트
 
-## Memo
+## 🧾 Memo
 
 뉴스피드 불러오기 Native Query
 
