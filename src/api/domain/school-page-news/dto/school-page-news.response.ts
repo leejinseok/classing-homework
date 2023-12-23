@@ -1,11 +1,22 @@
 import { SchoolPageNews } from 'src/core/db/domain/school-page-news/school-page-news.entity';
 import { SchoolPageResponse } from '../../school-page/dto/school-page.response';
+import { ApiProperty } from '@nestjs/swagger';
+import { API_EXAMPLE } from 'src/api/config/constants';
 
 export class SchoolPageNewsResponse {
+  @ApiProperty({ example: 1 })
   id: number;
+
+  @ApiProperty({ example: API_EXAMPLE.SCHOOL_PAGE_NEWS_CONTENT })
   content: string;
+
+  @ApiProperty({ example: 1 })
   schoolPageId: number;
+
+  @ApiProperty()
   createdAt: Date;
+
+  @ApiProperty()
   updatedAt: Date;
 
   static create(schoolPageNews: SchoolPageNews) {
@@ -20,10 +31,19 @@ export class SchoolPageNewsResponse {
 }
 
 export class SchoolPageNewsWithSchoolPageResponse {
+  @ApiProperty({ example: 1 })
   id: number;
+
+  @ApiProperty({ example: API_EXAMPLE.SCHOOL_PAGE_NEWS_CONTENT })
   content: string;
+
+  @ApiProperty()
   schoolPage: SchoolPageResponse;
+
+  @ApiProperty()
   createdAt: Date;
+
+  @ApiProperty()
   updatedAt: Date;
 
   static create(schoolPageNews: SchoolPageNews) {

@@ -1,12 +1,12 @@
 import { Body, Controller, Post } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Public } from 'src/api/config/metadata';
 import { AuthService } from './auth.service';
 import { LoginRequest, SignUpRequest } from './dto/auth.reqeust';
 import { SignUpResposne, TokenResponse } from './dto/auth.response';
-import { JwtService } from '@nestjs/jwt';
-import { Public } from 'src/api/config/metadata';
-import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Auth (인증)')
+@ApiTags('인증 (Auth)')
 @Controller('/api/v1/auth')
 export class AuthController {
   constructor(
@@ -14,6 +14,8 @@ export class AuthController {
     private readonly jwtService: JwtService,
   ) {}
 
+  @ApiOperation({ summary: '회원가입' })
+  @ApiResponse({ type: SignUpResposne, status: 201 })
   @Public()
   @Post('/sign-up')
   async signUp(@Body() request: SignUpRequest): Promise<SignUpResposne> {
@@ -21,6 +23,8 @@ export class AuthController {
     return SignUpResposne.create(member);
   }
 
+  @ApiOperation({ summary: '로그인' })
+  @ApiResponse({ type: TokenResponse, status: 200 })
   @Public()
   @Post('/login')
   async login(@Body() request: LoginRequest): Promise<TokenResponse> {

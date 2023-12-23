@@ -1,11 +1,12 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { MemberRole } from 'src/core/db/domain/member/member.entity';
+import { API_EXAMPLE } from './config/constants';
 import { AuthService } from './domain/auth/auth.service';
 import { SignUpRequest } from './domain/auth/dto/auth.reqeust';
-import { SchoolPageService } from './domain/school-page/school-page.service';
-import { SchoolPageRequest } from './domain/school-page/dto/school-page.request';
-import { SchoolPageNewsService } from './domain/school-page-news/school-page-news.service';
 import { SchoolPageNewsRequest } from './domain/school-page-news/dto/school-page-news.request';
+import { SchoolPageNewsService } from './domain/school-page-news/school-page-news.service';
+import { SchoolPageRequest } from './domain/school-page/dto/school-page.request';
+import { SchoolPageService } from './domain/school-page/school-page.service';
 
 @Injectable()
 export class ApiApplication implements OnModuleInit {
@@ -16,39 +17,35 @@ export class ApiApplication implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
-    await this.signUp();
-  }
+    // 관리자 계정 생성
+    const adminMemberRequest = new SignUpRequest();
+    adminMemberRequest.email = API_EXAMPLE.ADMIN_NAME;
+    adminMemberRequest.name = API_EXAMPLE.ADMIN_NAME;
+    adminMemberRequest.password = API_EXAMPLE.PASSWORD;
+    adminMemberRequest.role = MemberRole.ADMIN;
+    const adminMember = await this.authService.signUp(adminMemberRequest);
 
-  async signUp() {
-    const signUpRequest1 = new SignUpRequest();
-    signUpRequest1.email = 'test@a.com';
-    signUpRequest1.name = 'test';
-    signUpRequest1.password = 'test123';
-    signUpRequest1.role = MemberRole.ADMIN;
-    const adminMember = await this.authService.signUp(signUpRequest1);
+    // 학생 계정 생성
+    const studentMember = new SignUpRequest();
+    studentMember.email = API_EXAMPLE.STUDENT_EMAIL;
+    studentMember.name = API_EXAMPLE.STUDENT_NAME;
+    studentMember.password = API_EXAMPLE.PASSWORD;
+    studentMember.role = MemberRole.STUDENT;
+    await this.authService.signUp(studentMember);
 
-    const signUpRequest2 = new SignUpRequest();
-    signUpRequest2.email = 'student@a.com';
-    signUpRequest2.name = 'student';
-    signUpRequest2.password = 'student123';
-    signUpRequest2.role = MemberRole.STUDENT;
-    this.authService.signUp(signUpRequest2);
+    // 학교페이지 생성
+    const schoolPageRequest = new SchoolPageRequest();
+    schoolPageRequest.region = '서울';
+    schoolPageRequest.schoolName = API_EXAMPLE.SCHOOL_NAME;
+    const schoolPage = await this.schoolPageService.save(
+      schoolPageRequest,
+      adminMember.id,
+    );
 
-    const schoolPage = await this.createSchoolPage(adminMember.id);
-    await this.createShoolPageNews(schoolPage.id, adminMember.id);
-  }
-
-  createSchoolPage(creatdBy: number) {
-    const request = new SchoolPageRequest();
-    request.region = '서울';
-    request.schoolName = '아무고등학교';
-    return this.schoolPageService.save(request, creatdBy);
-  }
-
-  createShoolPageNews(schoolPageId: number, createdBy: number) {
+    // 학교페이지 소식 생성
     const request = new SchoolPageNewsRequest();
-    request.content = '안녕하세요. 학교소식입니다';
-    request.schoolPageId = schoolPageId;
-    return this.schoolPageNewsService.save(request, createdBy);
+    request.content = API_EXAMPLE.SCHOOL_PAGE_NEWS_CONTENT;
+    request.schoolPageId = schoolPage.id;
+    return this.schoolPageNewsService.save(request, adminMember.id);
   }
 }

@@ -7,19 +7,28 @@ import {
   Post,
   Request,
 } from '@nestjs/common';
-import { SchoolPageService } from './school-page.service';
-import { SchoolPageRequest } from './dto/school-page.request';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Roles } from 'src/api/config/metadata';
 import { MemberRole } from 'src/core/db/domain/member/member.entity';
-import { SchoolPageResponse } from './dto/school-page.response';
 import { JwtPayload } from '../auth/dto/jwt-payload';
-import { ApiTags } from '@nestjs/swagger';
+import { SchoolPageRequest } from './dto/school-page.request';
+import { SchoolPageResponse } from './dto/school-page.response';
+import { SchoolPageService } from './school-page.service';
 
-@ApiTags('SchoolPage (학교페이지)')
+@ApiTags('학교페이지 (SchoolPage)')
+@ApiBearerAuth()
 @Controller('/api/v1/school-pages')
 export class SchoolPageController {
   constructor(private readonly schoolPageService: SchoolPageService) {}
 
+  @ApiOperation({ summary: '학교페이지 생성 (관리자만)' })
+  @ApiResponse({ type: SchoolPageResponse, status: 201 })
   @Roles(MemberRole.ADMIN)
   @Post()
   async createShoolPage(
@@ -34,6 +43,13 @@ export class SchoolPageController {
     return SchoolPageResponse.create(schoolPage);
   }
 
+  @ApiOperation({ summary: '학교페이지 수정 (관리자만)' })
+  @ApiResponse({ type: SchoolPageResponse, status: 201 })
+  @ApiParam({
+    name: 'schoolPageId',
+    example: 1,
+    description: '수정할 학교페이지 ID',
+  })
   @Roles(MemberRole.ADMIN)
   @Patch('/:schoolPageId')
   async updateSchoolPage(
@@ -50,6 +66,12 @@ export class SchoolPageController {
     return SchoolPageResponse.create(schoolPage);
   }
 
+  @ApiOperation({ summary: '학교페이지 삭제 (관리자만)' })
+  @ApiParam({
+    name: 'schoolPageId',
+    example: 1,
+    description: '삭제할 학교페이지 ID',
+  })
   @Roles(MemberRole.ADMIN)
   @Delete('/:schoolPageId')
   async deleteSchoolPage(

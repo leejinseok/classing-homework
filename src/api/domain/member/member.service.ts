@@ -113,7 +113,7 @@ export class MemberService {
       .getManyAndCount();
   }
 
-  async findSchoolPageNews(memberId: number) {
+  async findSchoolPageNewsSubscribed(memberId: number) {
     return this.schoolPageNewsRepository
       .createQueryBuilder('news')
       .innerJoinAndSelect('news.schoolPage', 'schoolPage')
@@ -129,5 +129,13 @@ export class MemberService {
       )
       .orderBy('news.created_at', 'DESC')
       .getManyAndCount();
+  }
+
+  findById(memberId: number): Promise<Member> {
+    return this.memberRepository.findOne({
+      where: {
+        id: memberId,
+      },
+    });
   }
 }

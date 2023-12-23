@@ -10,7 +10,6 @@ import { AuthController } from './domain/auth/auth.controller';
 import { AuthService } from './domain/auth/auth.service';
 import { MemberService } from './domain/member/member.service';
 import { MembersAuthenticatedController } from './domain/member/members.authenticated.controller';
-import { MembersController } from './domain/member/members.controller';
 import { SchoolPageNewsController } from './domain/school-page-news/school-page-news.controller';
 import { SchoolPageNewsService } from './domain/school-page-news/school-page-news.service';
 import { SchoolPageController } from './domain/school-page/school-page.controller';
@@ -46,7 +45,6 @@ const jwtModule = () => {
   imports: [ConfigModule.forRoot(), CoreModule, jwtModule()],
   controllers: [
     AuthController,
-    MembersController,
     MembersAuthenticatedController,
     SchoolPageController,
     SchoolPageNewsController,

@@ -7,23 +7,40 @@ import {
   Query,
   Request,
 } from '@nestjs/common';
-import { PageResponse } from 'src/common/dto/page.response';
-import { SchoolPageResponse } from '../school-page/dto/school-page.response';
-import { MemberService } from './member.service';
 import {
-  SchoolPageNewsResponse,
-  SchoolPageNewsWithSchoolPageResponse,
-} from '../school-page-news/dto/school-page-news.response';
-import { ApiTags } from '@nestjs/swagger';
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { PageResponse } from 'src/common/dto/page.response';
+import { SchoolPageNewsWithSchoolPageResponse } from '../school-page-news/dto/school-page-news.response';
+import { SchoolPageResponse } from '../school-page/dto/school-page.response';
+import { MemberResponse } from './dto/member.response';
+import { MemberService } from './member.service';
 
-@ApiTags('Member Authenticated (인증 사용자)')
+@ApiTags('인증 사용자 (Member Authenticated)')
+@ApiBearerAuth()
 @Controller('/api/v1/members/authenticated')
 export class MembersAuthenticatedController {
   constructor(private readonly memberService: MemberService) {}
 
+  @ApiOperation({ summary: '내 정보 요청' })
+  @ApiResponse({ type: MemberResponse, status: 200 })
   @Get('/me')
-  getMe() {}
+  async getMe(@Request() req): Promise<MemberResponse> {
+    const member = await this.memberService.findById(req.user.sub);
+    return MemberResponse.create(member);
+  }
 
+  @ApiOperation({ summary: '학교페이지 구독' })
+  @ApiParam({
+    name: 'schoolPageId',
+    example: 1,
+    description: '구독할 학교페이지 ID',
+  })
   @Post('/school-pages/:schoolPageId/subscribe')
   async subscribeSchoolPage(
     @Param('schoolPageId') schoolPageId: number,
@@ -32,6 +49,12 @@ export class MembersAuthenticatedController {
     await this.memberService.subscribeSchoolPage(schoolPageId, req.user.sub);
   }
 
+  @ApiOperation({ summary: '학교페이지 구독 취소' })
+  @ApiParam({
+    name: 'schoolPageId',
+    example: 1,
+    description: '구독을 해지할 학교페이지 ID',
+  })
   @Patch('/school-pages/:schoolPageId/unsubscribe')
   async unsubscribeSchoolPage(
     @Param('schoolPageId') schoolPageId: number,
@@ -40,6 +63,10 @@ export class MembersAuthenticatedController {
     await this.memberService.unsubscribeSchoolPage(schoolPageId, req.user.sub);
   }
 
+  @ApiOperation({ summary: '구독 중인 학교페이지 목록' })
+  @ApiResponse({ type: PageResponse<SchoolPageResponse>, status: 200 })
+  @ApiQuery({ name: 'page', example: 0 })
+  @ApiQuery({ name: 'size', example: 10 })
   @Get('/school-pages/subscribed')
   async getSchoolPagesSubscribed(
     @Query('page') page: number,
@@ -63,15 +90,21 @@ export class MembersAuthenticatedController {
     );
   }
 
+  @ApiOperation({ summary: '뉴스피드 (타임라인)' })
+  @ApiResponse({
+    type: PageResponse<SchoolPageNewsWithSchoolPageResponse>,
+    status: 200,
+  })
+  @ApiQuery({ name: 'page', example: 0 })
+  @ApiQuery({ name: 'size', example: 10 })
   @Get('/school-page-news')
   async getSchoolPageNews(
     @Query('page') page: number,
     @Query('size') size: number,
     @Request() req,
   ): Promise<PageResponse<SchoolPageNewsWithSchoolPageResponse>> {
-    const schoolPageNews = await this.memberService.findSchoolPageNews(
-      req.user.sub,
-    );
+    const schoolPageNews =
+      await this.memberService.findSchoolPageNewsSubscribed(req.user.sub);
 
     return new PageResponse(
       schoolPageNews[1],
