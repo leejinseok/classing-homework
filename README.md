@@ -66,10 +66,12 @@ MemberSchoolPageSubscribe
 
 - node 21.4.0
 - npm 10.2.4
+- typescript
 - mysql
 - swagger
-- jwt
+- jsonwebtoken
 - jest
+- docker
 
 ## 🏃 Run Application
 
@@ -116,7 +118,17 @@ npm run start
     - 구독을 취소해도 구독을 취소하기 이전의 소식은 불러옴
 
 - [ ] 테스트코드
+
   - [x] root controller 테스트
+  - [ ] auth controller 테스트
+  - [ ] auth service 테스트
+  - [ ] school page controller 테스트
+  - [ ] school page service 테스트
+  - [ ] school page news controller 테스트
+  - [ ] school page news service 테스트
+
+- [ ] swagger 교정
+  - api property, operation, validator 추가
 
 ## 🧾 Memo
 
