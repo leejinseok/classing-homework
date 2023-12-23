@@ -1,10 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { API_EXAMPLE } from 'src/api/config/constants';
+import { EncryptUtils } from 'src/common/util/encrypt.util';
 import { Member, MemberRole } from 'src/core/db/domain/member/member.entity';
 
 export class SignUpResposne {
   @ApiProperty({ example: 1 })
   id: number;
+
+  @ApiProperty({ example: API_EXAMPLE.ADMIN_EMAIL })
+  email: string;
 
   @ApiProperty({ example: API_EXAMPLE.ADMIN_NAME })
   name: string;
@@ -12,9 +16,10 @@ export class SignUpResposne {
   @ApiProperty({ example: MemberRole.ADMIN })
   role: MemberRole;
 
-  static create(member: Member): SignUpResposne {
+  static async create(member: Member): Promise<SignUpResposne> {
     const response = new SignUpResposne();
     response.id = member.id;
+    response.email = await EncryptUtils.decrypt(member.email);
     response.name = member.name;
     response.role = member.role;
     return response;

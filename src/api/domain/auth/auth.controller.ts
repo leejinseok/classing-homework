@@ -20,7 +20,7 @@ export class AuthController {
   @Post('/sign-up')
   async signUp(@Body() request: SignUpRequest): Promise<SignUpResposne> {
     const member = await this.authService.signUp(request);
-    return SignUpResposne.create(member);
+    return await SignUpResposne.create(member);
   }
 
   @ApiOperation({ summary: '로그인' })
