@@ -6,6 +6,5 @@ import { RootController } from './root.controller';
 @Module({
   imports: [ConfigModule.forRoot(), ApiModule],
   controllers: [RootController],
-  providers: [],
 })
 export class RootModule {}

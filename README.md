@@ -75,9 +75,37 @@ npm run start
   - [x] 학생회원 > 학교페이지 구독
   - [x] 학생회원 > 학교페이지 구독 취소
   - [x] 학생회원 > 학교페이지 목록 (구독중)
-  - [ ] 학생회원 > 학교페이지 > 소식 목록
+  - [x] 학생회원 > 학교페이지 > 소식 목록
     - 소식은 구독 시점부터
-    - 구독을 취소했다면 구독 취소 시점 이후의 소식은 노출하지 않음
+    - 구독을 취소해도 구독을 취소하기 이전의 소식은 불러옴
 
 - [ ] 테스트코드
   - [x] root controller 테스트
+
+## Memo
+
+뉴스피드 불러오기 Native Query
+
+```sql
+select
+  schoolPageNews.*,
+  schoolPage.school_name,
+  memberSchoolPageSubscribe.member_id,
+  memberSchoolPageSubscribe.created_at,
+  memberSchoolPageSubscribe.unsubscribed_at
+from school_page_news schoolPageNews
+  inner join school_page schoolPage
+    on schoolPage.id = schoolPageNews.school_page_id
+  inner join member_school_page_subscribe memberSchoolPageSubscribe
+    on memberSchoolPageSubscribe.school_page_id = schoolPageNews.school_page_id
+where
+  memberSchoolPageSubscribe.member_id = ${memberId}
+  and schoolPageNews.created_at >= memberSchoolPageSubscribe.created_at
+  and
+  (
+    memberSchoolPageSubscribe.unsubscribed_at is not null
+      and schoolPageNews.created_at <= memberSchoolPageSubscribe.unsubscribed_at
+    or
+    memberSchoolPageSubscribe.unsubscribed_at is null
+  )
+```

@@ -10,7 +10,10 @@ import {
 import { PageResponse } from 'src/common/dto/page.response';
 import { SchoolPageResponse } from '../school-page/dto/school-page.response';
 import { MemberService } from './member.service';
-import { SchoolPageNewsResponse } from '../school-page-news/dto/school-page-news.response';
+import {
+  SchoolPageNewsResponse,
+  SchoolPageNewsWithSchoolPageResponse,
+} from '../school-page-news/dto/school-page-news.response';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Member Authenticated (인증 사용자)')
@@ -62,9 +65,21 @@ export class MembersAuthenticatedController {
 
   @Get('/school-page-news')
   async getSchoolPageNews(
+    @Query('page') page: number,
+    @Query('size') size: number,
     @Request() req,
-  ): Promise<PageResponse<SchoolPageNewsResponse>> {
-    await this.memberService.findSchoolPageNews(req.user.sub);
-    return null;
+  ): Promise<PageResponse<SchoolPageNewsWithSchoolPageResponse>> {
+    const schoolPageNews = await this.memberService.findSchoolPageNews(
+      req.user.sub,
+    );
+
+    return new PageResponse(
+      schoolPageNews[1],
+      page,
+      size,
+      schoolPageNews[0].map((schoolPageNews) =>
+        SchoolPageNewsWithSchoolPageResponse.create(schoolPageNews),
+      ),
+    );
   }
 }

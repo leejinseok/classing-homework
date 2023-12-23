@@ -4,18 +4,19 @@ import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 import { HttpExceptionFilter } from 'src/api/filter/http-exception.filter';
 import { CoreModule } from 'src/core/core.module';
+import { ApiApplication } from './api.application';
 import { JwtConstants } from './config/constants';
 import { AuthController } from './domain/auth/auth.controller';
-import { AuthGuard } from './guard/auth.guard';
 import { AuthService } from './domain/auth/auth.service';
-import { RolesGuard } from './guard/roles.guard';
 import { MemberService } from './domain/member/member.service';
+import { MembersAuthenticatedController } from './domain/member/members.authenticated.controller';
 import { MembersController } from './domain/member/members.controller';
 import { SchoolPageNewsController } from './domain/school-page-news/school-page-news.controller';
 import { SchoolPageNewsService } from './domain/school-page-news/school-page-news.service';
 import { SchoolPageController } from './domain/school-page/school-page.controller';
 import { SchoolPageService } from './domain/school-page/school-page.service';
-import { MembersAuthenticatedController } from './domain/member/members.authenticated.controller';
+import { AuthGuard } from './guard/auth.guard';
+import { RolesGuard } from './guard/roles.guard';
 
 const appFilter = {
   provide: APP_FILTER,
@@ -58,6 +59,7 @@ const jwtModule = () => {
     MemberService,
     SchoolPageService,
     SchoolPageNewsService,
+    ApiApplication,
   ],
 })
 export class ApiModule {}
