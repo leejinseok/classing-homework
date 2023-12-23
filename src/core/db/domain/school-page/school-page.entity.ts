@@ -3,11 +3,14 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
 import { Member } from '../member/member.entity';
 import { Common, CommonStatus } from 'src/core/db/database.common.entity';
+import { SchoolPageNews } from '../school-page-news/school-page-news.entity';
+import { MemberSchoolPageSubscribe } from '../member/member-schoolPage-subscribe.entity';
 
 @Entity()
 @Unique('uidx_school_page_1', ['schoolName', 'region'])
@@ -30,6 +33,24 @@ export class SchoolPage extends Common {
 
   @Column({ type: 'varchar', length: 30, default: CommonStatus.ACTIVE })
   status: CommonStatus;
+
+  @OneToMany(
+    () => SchoolPageNews,
+    (schoolPageNews) => schoolPageNews.schoolPage,
+    {
+      lazy: true,
+    },
+  )
+  news: SchoolPageNews[];
+
+  @OneToMany(
+    () => MemberSchoolPageSubscribe,
+    (subscribe) => subscribe.schoolPage,
+    {
+      lazy: true,
+    },
+  )
+  subscribers: Member[];
 
   static create(schoolName: string, region: string, createdBy: Member) {
     const schoolPage = new SchoolPage();

@@ -112,4 +112,32 @@ export class MemberService {
       .limit(size)
       .getManyAndCount();
   }
+
+  async findSchoolPageNews(memberId: number) {
+    const data = await this.memberSchoolPageSubscribeRepository.query(
+      `
+      select 
+        schoolPageNews.*, 
+        schoolPage.school_name, 
+        memberSchoolPageSubscribe.member_id, 
+        memberSchoolPageSubscribe.created_at,
+        memberSchoolPageSubscribe.unsubscribed_at
+      from school_page_news schoolPageNews
+        inner join school_page schoolPage
+          on schoolPage.id = schoolPageNews.school_page_id
+          inner join member_school_page_subscribe memberSchoolPageSubscribe 
+            on memberSchoolPageSubscribe.school_page_id = schoolPageNews.school_page_id
+      where 
+        memberSchoolPageSubscribe.member_id = ${memberId} and schoolPageNews.created_at >= memberSchoolPageSubscribe.created_at
+        and 
+        (
+          memberSchoolPageSubscribe.unsubscribed_at is not null and schoolPageNews.created_at <= memberSchoolPageSubscribe.unsubscribed_at
+          or 
+          memberSchoolPageSubscribe.unsubscribed_at is null
+        );
+      `,
+    );
+
+    console.log(data);
+  }
 }
