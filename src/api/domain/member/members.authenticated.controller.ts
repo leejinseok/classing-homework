@@ -15,6 +15,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { ApiResponsePaginated } from 'src/api/config/paginated';
 import { PageResponse } from 'src/common/dto/page.response';
 import { SchoolPageNewsWithSchoolPageResponse } from '../school-page-news/dto/school-page-news.response';
 import { SchoolPageResponse } from '../school-page/dto/school-page.response';
@@ -64,7 +65,7 @@ export class MembersAuthenticatedController {
   }
 
   @ApiOperation({ summary: '구독 중인 학교페이지 목록' })
-  @ApiResponse({ type: PageResponse<SchoolPageResponse>, status: 200 })
+  @ApiResponsePaginated(SchoolPageResponse)
   @ApiQuery({ name: 'page', example: 0 })
   @ApiQuery({ name: 'size', example: 10 })
   @Get('/school-pages/subscribed')
@@ -91,10 +92,7 @@ export class MembersAuthenticatedController {
   }
 
   @ApiOperation({ summary: '뉴스피드 (타임라인)' })
-  @ApiResponse({
-    type: PageResponse<SchoolPageNewsWithSchoolPageResponse>,
-    status: 200,
-  })
+  @ApiResponsePaginated(SchoolPageNewsWithSchoolPageResponse)
   @ApiQuery({ name: 'page', example: 0 })
   @ApiQuery({ name: 'size', example: 10 })
   @Get('/school-page-news')

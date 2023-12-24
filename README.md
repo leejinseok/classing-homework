@@ -120,7 +120,7 @@ npm run start
 - [ ] 테스트코드
 
   - [x] root controller 테스트
-  - [ ] auth controller 테스트
+  - [x] auth controller 테스트
   - [ ] auth service 테스트
   - [ ] school page controller 테스트
   - [ ] school page service 테스트

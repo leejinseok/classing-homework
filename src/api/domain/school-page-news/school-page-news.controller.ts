@@ -18,6 +18,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { Roles } from 'src/api/config/metadata';
+import { ApiResponsePaginated } from 'src/api/config/paginated';
 import { PageResponse } from 'src/common/dto/page.response';
 import { MemberRole } from 'src/core/db/domain/member/member.entity';
 import { JwtPayload } from '../auth/dto/jwt-payload';
@@ -35,7 +36,7 @@ export class SchoolPageNewsController {
   constructor(private readonly schoolPageNewsService: SchoolPageNewsService) {}
 
   @ApiOperation({ summary: '학교페이지 소식 조회' })
-  @ApiResponse({ type: PageResponse<SchoolPageNewsResponse>, status: 200 })
+  @ApiResponsePaginated(SchoolPageNewsResponse)
   @ApiQuery({ name: 'page', example: 0 })
   @ApiQuery({ name: 'size', example: 10 })
   @ApiQuery({

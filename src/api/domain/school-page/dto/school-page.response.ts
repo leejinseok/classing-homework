@@ -27,4 +27,14 @@ export class SchoolPageResponse {
     response.updatedAt = schoolPage.updatedAt;
     return response;
   }
+
+  static createSample() {
+    const response = new SchoolPageResponse();
+    response.id = 1;
+    response.schoolName = API_EXAMPLE.SCHOOL_NAME;
+    response.region = '서울';
+    response.createdAt = new Date();
+    response.updatedAt = new Date();
+    return response;
+  }
 }

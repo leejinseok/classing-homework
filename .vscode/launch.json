@@ -11,7 +11,8 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "start"],
       "sourceMaps": true,
-      "console": "integratedTerminal"
+      "console": "integratedTerminal",
+      "restart": true
     },
     {
       "type": "node",

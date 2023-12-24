@@ -1,16 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class PageInfo {
-  @ApiProperty()
+  @ApiProperty({ example: 20 })
   totalCount: number;
 
-  @ApiProperty()
+  @ApiProperty({ example: 2 })
   totalPage: number;
 
-  @ApiProperty()
+  @ApiProperty({ example: 0 })
   currentPage: number;
 
-  @ApiProperty()
+  @ApiProperty({ example: 10 })
   pageSize: number;
 
   constructor(
@@ -30,7 +30,6 @@ export class PageResponse<T> {
   @ApiProperty()
   page: PageInfo;
 
-  @ApiProperty({ example: [] })
   list: T[];
 
   constructor(
