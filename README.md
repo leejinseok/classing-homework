@@ -66,7 +66,7 @@ MemberSchoolPageSubscribe
 
 - node 21.4.0
 - npm 10.2.4
-- typescript
+- typescript 5.1.3
 - mysql
 - swagger
 - jsonwebtoken
@@ -127,8 +127,11 @@ npm run start
   - [ ] school page news controller 테스트
   - [ ] school page news service 테스트
 
-- [ ] swagger 교정
+- [x] swagger 교정
+
   - api property, operation, validator 추가
+
+- [ ] validate pipe 테스트
 
 ## 🧾 Memo
 
