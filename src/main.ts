@@ -1,11 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ApiModule } from './api/api.module';
-import { ValidationPipe } from './api/config/validate.pipe';
 
 async function bootstrap() {
   const app = await NestFactory.create(ApiModule);
-  app.useGlobalPipes(new ValidationPipe());
 
   const setUpSwagger = () => {
     const config = new DocumentBuilder()

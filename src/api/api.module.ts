@@ -6,6 +6,7 @@ import { HttpExceptionFilter } from 'src/api/filter/http-exception.filter';
 import { CoreModule } from 'src/core/core.module';
 import { ApiApplication } from './api.application';
 import { JwtConstants } from './config/constants';
+import { validationPipe } from './config/validate';
 import { AuthController } from './domain/auth/auth.controller';
 import { AuthService } from './domain/auth/auth.service';
 import { MemberService } from './domain/member/member.service';
@@ -14,23 +15,31 @@ import { SchoolPageNewsController } from './domain/school-page-news/school-page-
 import { SchoolPageNewsService } from './domain/school-page-news/school-page-news.service';
 import { SchoolPageController } from './domain/school-page/school-page.controller';
 import { SchoolPageService } from './domain/school-page/school-page.service';
+import { ValidateExceptionFilter } from './filter/validate-exception.filter';
 import { AuthGuard } from './guard/auth.guard';
 import { RolesGuard } from './guard/roles.guard';
 
-const appFilter = {
-  provide: APP_FILTER,
-  useClass: HttpExceptionFilter,
-};
+const appFilters = [
+  {
+    provide: APP_FILTER,
+    useClass: HttpExceptionFilter,
+  },
+  {
+    provide: APP_FILTER,
+    useClass: ValidateExceptionFilter,
+  },
+];
 
-const authGuard = {
-  provide: APP_GUARD,
-  useClass: AuthGuard,
-};
-
-const rolesGuard = {
-  provide: APP_GUARD,
-  useClass: RolesGuard,
-};
+const appGuards = [
+  {
+    provide: APP_GUARD,
+    useClass: AuthGuard,
+  },
+  {
+    provide: APP_GUARD,
+    useClass: RolesGuard,
+  },
+];
 
 const jwtModule = () => {
   JwtConstants.secret = process.env.JWT_SECRET_KEY;
@@ -50,9 +59,9 @@ const jwtModule = () => {
     SchoolPageNewsController,
   ],
   providers: [
-    appFilter,
-    authGuard,
-    rolesGuard,
+    ...appFilters,
+    ...appGuards,
+    validationPipe,
     AuthService,
     MemberService,
     SchoolPageService,
