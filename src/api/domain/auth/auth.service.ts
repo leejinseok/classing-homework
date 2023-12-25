@@ -1,16 +1,14 @@
 import {
   BadRequestException,
-  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Repository } from 'typeorm';
-import { LoginRequest, SignUpRequest } from './dto/auth.reqeust';
+import { InjectRepository } from '@nestjs/typeorm';
 import { BcryptUtils } from 'src/common/util/bcrypt.util';
 import { EncryptUtils } from 'src/common/util/encrypt.util';
-import { MEMBER_REPOSITORY } from 'src/core/db/domain/member/member.providers';
 import { Member } from 'src/core/db/domain/member/member.entity';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { LoginRequest, SignUpRequest } from './dto/auth.reqeust';
 
 @Injectable()
 export class AuthService {

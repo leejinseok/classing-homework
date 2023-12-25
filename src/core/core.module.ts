@@ -5,7 +5,9 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      envFilePath: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DB_HOST,
@@ -15,7 +17,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
       database: process.env.DB_DATABASE,
       entities: [__dirname + '/../**/*.entity{.ts,.js}'],
       logging: true,
-      synchronize: true,
+      synchronize: process.env.DB_SYNC === 'true',
       dropSchema: true,
       namingStrategy: new SnakeNamingStrategy(),
     }),

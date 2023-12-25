@@ -16,13 +16,13 @@ import { Brackets, Repository } from 'typeorm';
 export class MemberService {
   constructor(
     @InjectRepository(Member)
-    private memberRepository: Repository<Member>,
+    private readonly memberRepository: Repository<Member>,
     @InjectRepository(MemberSchoolPageSubscribe)
-    private memberSchoolPageSubscribeRepository: Repository<MemberSchoolPageSubscribe>,
+    private readonly memberSchoolPageSubscribeRepository: Repository<MemberSchoolPageSubscribe>,
     @InjectRepository(SchoolPage)
-    private schoolPageRepository: Repository<SchoolPage>,
+    private readonly schoolPageRepository: Repository<SchoolPage>,
     @InjectRepository(SchoolPageNews)
-    private schoolPageNewsRepository: Repository<SchoolPageNews>,
+    private readonly schoolPageNewsRepository: Repository<SchoolPageNews>,
   ) {}
 
   async subscribeSchoolPage(schoolPageId: number, memberId: number) {
