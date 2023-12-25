@@ -4,7 +4,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { CoreModule } from '../core/core.module';
-import { MemberSchoolPageSubscribe } from '../core/db/domain/member/member-schoolpage-subscribe.entity';
+import { MemberSchoolPageSubscribe } from '../core/db/domain/member/member-schoolPage-subscribe.entity';
 import { Member, MemberRole } from '../core/db/domain/member/member.entity';
 import { SchoolPageNews } from '../core/db/domain/school-page-news/school-page-news.entity';
 import { SchoolPage } from '../core/db/domain/school-page/school-page.entity';

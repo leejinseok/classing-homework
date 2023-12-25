@@ -15,6 +15,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
       database: 'classting_homework',
       entities: [__dirname + '/../**/*.entity{.ts,.js}'],
       logging: true,
+      dropSchema: true,
       synchronize: true,
       namingStrategy: new SnakeNamingStrategy(),
     }),
