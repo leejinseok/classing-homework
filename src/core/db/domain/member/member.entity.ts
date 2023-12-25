@@ -1,9 +1,9 @@
-import { API_EXAMPLE } from 'src/api/config/constants';
-import { SignUpRequest } from 'src/api/domain/auth/dto/auth.reqeust';
-import { BcryptUtils } from 'src/common/util/bcrypt.util';
-import { EncryptUtils } from 'src/common/util/encrypt.util';
-import { Common } from 'src/core/db/database.common.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { API_EXAMPLE } from '../../../../api/config/constants';
+import { SignUpRequest } from '../../../../api/domain/auth/dto/auth.reqeust';
+import { BcryptUtils } from '../../../../common/util/bcrypt.util';
+import { EncryptUtils } from '../../../../common/util/encrypt.util';
+import { Common } from '../../database.common.entity';
 import { SchoolPage } from '../school-page/school-page.entity';
 import { MemberSchoolPageSubscribe } from './member-schoolPage-subscribe.entity';
 

@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Public } from 'src/api/config/metadata';
+import { Public } from '../../config/metadata';
 import { AuthService } from './auth.service';
 import { LoginRequest, SignUpRequest } from './dto/auth.reqeust';
 import { SignUpResposne, TokenResponse } from './dto/auth.response';

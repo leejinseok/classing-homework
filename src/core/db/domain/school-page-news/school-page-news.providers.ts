@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
-import { DATA_SOURCE } from 'src/api/config/constants';
 import { SchoolPageNews } from './school-page-news.entity';
+import { DATA_SOURCE } from '../../../../api/config/constants';
 export const SCHOOL_PAGE_NEWS_REPOSITORY = 'SCHOOL_PAGE_NEWS_REPOSITORY';
 
 export const schoolPageNewsRepository = {

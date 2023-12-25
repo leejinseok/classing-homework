@@ -5,20 +5,17 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      envFilePath: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
-    }),
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: process.env.DB_HOST,
-      port: +process.env.DB_PORT,
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'root',
+      database: 'classting_homework',
       entities: [__dirname + '/../**/*.entity{.ts,.js}'],
       logging: true,
       synchronize: true,
-      dropSchema: true,
       namingStrategy: new SnakeNamingStrategy(),
     }),
   ],

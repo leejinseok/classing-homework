@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import { Member } from './member.entity';
-import { DATA_SOURCE } from 'src/api/config/constants';
 import { MemberSchoolPageSubscribe } from './member-schoolPage-subscribe.entity';
+import { DATA_SOURCE } from '../../../../api/config/constants';
 
 export const MEMBER_REPOSITORY = 'MEMBER_REPOSITORY';
 export const MEMBER_SCHOOL_PAGE_SUBSCRIBE_REPOSITORY =

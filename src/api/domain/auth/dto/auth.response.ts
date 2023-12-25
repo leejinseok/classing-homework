@@ -1,7 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { API_EXAMPLE } from 'src/api/config/constants';
-import { EncryptUtils } from 'src/common/util/encrypt.util';
-import { Member, MemberRole } from 'src/core/db/domain/member/member.entity';
+import { EncryptUtils } from '../../../../common/util/encrypt.util';
+import {
+  Member,
+  MemberRole,
+} from '../../../../core/db/domain/member/member.entity';
+import { API_EXAMPLE } from '../../../config/constants';
 
 export class SignUpResposne {
   @ApiProperty({ example: 1 })

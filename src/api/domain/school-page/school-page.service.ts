@@ -4,11 +4,12 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ErrorMessage } from 'src/api/config/constants';
-import { CommonStatus } from 'src/core/db/database.common.entity';
-import { Member } from 'src/core/db/domain/member/member.entity';
-import { SchoolPage } from 'src/core/db/domain/school-page/school-page.entity';
+
 import { Repository } from 'typeorm';
+import { CommonStatus } from '../../../core/db/database.common.entity';
+import { Member } from '../../../core/db/domain/member/member.entity';
+import { SchoolPage } from '../../../core/db/domain/school-page/school-page.entity';
+import { ErrorMessage } from '../../config/constants';
 import { SchoolPageRequest } from './dto/school-page.request';
 
 @Injectable()

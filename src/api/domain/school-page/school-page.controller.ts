@@ -14,8 +14,8 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { Roles } from 'src/api/config/metadata';
-import { MemberRole } from 'src/core/db/domain/member/member.entity';
+import { MemberRole } from '../../../core/db/domain/member/member.entity';
+import { Roles } from '../../config/metadata';
 import { JwtPayload } from '../auth/dto/jwt-payload';
 import { SchoolPageRequest } from './dto/school-page.request';
 import { SchoolPageResponse } from './dto/school-page.response';

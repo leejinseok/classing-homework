@@ -2,12 +2,12 @@ import { Module, OnModuleInit } from '@nestjs/common';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { HttpExceptionFilter } from 'src/api/filter/http-exception.filter';
-import { CoreModule } from 'src/core/core.module';
-import { MemberSchoolPageSubscribe } from 'src/core/db/domain/member/member-schoolPage-subscribe.entity';
-import { Member, MemberRole } from 'src/core/db/domain/member/member.entity';
-import { SchoolPageNews } from 'src/core/db/domain/school-page-news/school-page-news.entity';
-import { SchoolPage } from 'src/core/db/domain/school-page/school-page.entity';
+
+import { CoreModule } from '../core/core.module';
+import { MemberSchoolPageSubscribe } from '../core/db/domain/member/member-schoolpage-subscribe.entity';
+import { Member, MemberRole } from '../core/db/domain/member/member.entity';
+import { SchoolPageNews } from '../core/db/domain/school-page-news/school-page-news.entity';
+import { SchoolPage } from '../core/db/domain/school-page/school-page.entity';
 import { API_EXAMPLE, JwtConstants } from './config/constants';
 import { validationPipe } from './config/validate';
 import { AuthController } from './domain/auth/auth.controller';
@@ -21,6 +21,7 @@ import { SchoolPageNewsService } from './domain/school-page-news/school-page-new
 import { SchoolPageRequest } from './domain/school-page/dto/school-page.request';
 import { SchoolPageController } from './domain/school-page/school-page.controller';
 import { SchoolPageService } from './domain/school-page/school-page.service';
+import { HttpExceptionFilter } from './filter/http-exception.filter';
 import { ValidateExceptionFilter } from './filter/validate-exception.filter';
 import { AuthGuard } from './guard/auth.guard';
 import { RolesGuard } from './guard/roles.guard';

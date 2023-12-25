@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { API_EXAMPLE } from 'src/api/config/constants';
-import { SchoolPage } from 'src/core/db/domain/school-page/school-page.entity';
+import { SchoolPage } from '../../../../core/db/domain/school-page/school-page.entity';
+import { API_EXAMPLE } from '../../../config/constants';
 
 export class SchoolPageResponse {
   @ApiProperty({ example: 1 })

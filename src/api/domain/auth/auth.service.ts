@@ -4,10 +4,10 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BcryptUtils } from 'src/common/util/bcrypt.util';
-import { EncryptUtils } from 'src/common/util/encrypt.util';
-import { Member } from 'src/core/db/domain/member/member.entity';
 import { Repository } from 'typeorm';
+import { BcryptUtils } from '../../../common/util/bcrypt.util';
+import { EncryptUtils } from '../../../common/util/encrypt.util';
+import { Member } from '../../../core/db/domain/member/member.entity';
 import { LoginRequest, SignUpRequest } from './dto/auth.reqeust';
 
 @Injectable()

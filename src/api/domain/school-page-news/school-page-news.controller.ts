@@ -17,10 +17,10 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { Roles } from 'src/api/config/metadata';
-import { ApiResponsePaginated } from 'src/api/config/paginated';
-import { PageResponse } from 'src/common/dto/page.response';
-import { MemberRole } from 'src/core/db/domain/member/member.entity';
+import { PageResponse } from '../../../common/dto/page.response';
+import { MemberRole } from '../../../core/db/domain/member/member.entity';
+import { Roles } from '../../config/metadata';
+import { ApiResponsePaginated } from '../../config/paginated';
 import { JwtPayload } from '../auth/dto/jwt-payload';
 import {
   SchoolPageNewsRequest,

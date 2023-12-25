@@ -1,7 +1,7 @@
-import { SchoolPageNews } from 'src/core/db/domain/school-page-news/school-page-news.entity';
-import { SchoolPageResponse } from '../../school-page/dto/school-page.response';
 import { ApiProperty } from '@nestjs/swagger';
-import { API_EXAMPLE } from 'src/api/config/constants';
+import { SchoolPageNews } from '../../../../core/db/domain/school-page-news/school-page-news.entity';
+import { API_EXAMPLE } from '../../../config/constants';
+import { SchoolPageResponse } from '../../school-page/dto/school-page.response';
 
 export class SchoolPageNewsResponse {
   @ApiProperty({ example: 1 })

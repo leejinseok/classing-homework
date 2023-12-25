@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty } from 'class-validator';
-import { API_EXAMPLE } from 'src/api/config/constants';
-import { MemberRole } from 'src/core/db/domain/member/member.entity';
+import { MemberRole } from '../../../../core/db/domain/member/member.entity';
+import { API_EXAMPLE } from '../../../config/constants';
 
 export class SignUpRequest {
   @IsEmail()

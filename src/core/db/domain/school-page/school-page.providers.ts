@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { DATA_SOURCE } from 'src/api/config/constants';
+import { DATA_SOURCE } from '../../../../api/config/constants';
 import { SchoolPage } from './school-page.entity';
 export const SCHOOL_PAGE_REPOSITORY = 'SCHOOL_PAGE_REPOSITORY';
 

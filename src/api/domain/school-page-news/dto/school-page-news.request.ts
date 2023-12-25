@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { API_EXAMPLE } from 'src/api/config/constants';
+import { API_EXAMPLE } from '../../../config/constants';
 
 export class SchoolPageNewsRequest {
   @ApiProperty({ example: 1 })

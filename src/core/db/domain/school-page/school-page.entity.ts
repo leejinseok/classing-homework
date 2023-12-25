@@ -7,10 +7,10 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
-import { Member } from '../member/member.entity';
-import { Common, CommonStatus } from 'src/core/db/database.common.entity';
-import { SchoolPageNews } from '../school-page-news/school-page-news.entity';
+import { Common, CommonStatus } from '../../database.common.entity';
 import { MemberSchoolPageSubscribe } from '../member/member-schoolPage-subscribe.entity';
+import { Member } from '../member/member.entity';
+import { SchoolPageNews } from '../school-page-news/school-page-news.entity';
 
 @Entity()
 @Unique('uidx_school_page_1', ['schoolName', 'region'])

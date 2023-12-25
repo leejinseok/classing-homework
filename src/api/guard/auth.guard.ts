@@ -7,8 +7,8 @@ import {
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { JwtConstants } from 'src/api/config/constants';
-import { IS_PUBLIC_KEY } from 'src/api/config/metadata';
+import { JwtConstants } from '../config/constants';
+import { IS_PUBLIC_KEY } from '../config/metadata';
 import { JwtPayload } from '../domain/auth/dto/jwt-payload';
 
 @Injectable()

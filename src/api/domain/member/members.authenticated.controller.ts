@@ -15,8 +15,8 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { ApiResponsePaginated } from 'src/api/config/paginated';
-import { PageResponse } from 'src/common/dto/page.response';
+import { PageResponse } from '../../../common/dto/page.response';
+import { ApiResponsePaginated } from '../../config/paginated';
 import { SchoolPageNewsWithSchoolPageResponse } from '../school-page-news/dto/school-page-news.response';
 import { SchoolPageResponse } from '../school-page/dto/school-page.response';
 import { MemberResponse } from './dto/member.response';
