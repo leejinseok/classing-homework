@@ -10,3 +10,14 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: classting_homework
       TZ: Asia/Seoul
+
+  local-test-db:
+    image: mysql:8.2.0
+    container_name: local-test-db
+    restart: always
+    ports:
+      - 3307:3307
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: classting_homework
+      TZ: Asia/Seoul

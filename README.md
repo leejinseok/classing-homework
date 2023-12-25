@@ -76,7 +76,7 @@ MemberSchoolPageSubscribe
 ## 🏃 Run Application
 
 ```shellscript
-docker-compose docker/docker-compose-local.yml up -d
+docker-compose -f docker/docker-compose-db.yml up -d
 npm install
 npm run start
 ```

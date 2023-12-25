@@ -17,7 +17,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
       database: process.env.DB_DATABASE,
       entities: [__dirname + '/../**/*.entity{.ts,.js}'],
       logging: true,
-      synchronize: process.env.DB_SYNC === 'true',
+      synchronize: true,
       dropSchema: true,
       namingStrategy: new SnakeNamingStrategy(),
     }),
