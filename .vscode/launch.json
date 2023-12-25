@@ -17,6 +17,16 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "start test",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "test"],
+      "sourceMaps": true,
+      "console": "integratedTerminal",
+      "restart": true
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "start",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "start", "--", "--inspect-brk"],

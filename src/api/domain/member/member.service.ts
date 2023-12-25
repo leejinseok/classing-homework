@@ -1,33 +1,27 @@
-import { Brackets, Repository } from 'typeorm';
 import {
   ConflictException,
-  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import {
-  MEMBER_REPOSITORY,
-  MEMBER_SCHOOL_PAGE_SUBSCRIBE_REPOSITORY,
-} from 'src/core/db/domain/member/member.providers';
-import { Member } from 'src/core/db/domain/member/member.entity';
-import { MemberSchoolPageSubscribe } from 'src/core/db/domain/member/member-schoolPage-subscribe.entity';
-import { SCHOOL_PAGE_REPOSITORY } from 'src/core/db/domain/school-page/school-page.providers';
-import { SchoolPage } from 'src/core/db/domain/school-page/school-page.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 import { ErrorMessage } from 'src/api/config/constants';
 import { CommonStatus } from 'src/core/db/database.common.entity';
-import { SCHOOL_PAGE_NEWS_REPOSITORY } from 'src/core/db/domain/school-page-news/school-page-news.providers';
+import { MemberSchoolPageSubscribe } from 'src/core/db/domain/member/member-schoolPage-subscribe.entity';
+import { Member } from 'src/core/db/domain/member/member.entity';
 import { SchoolPageNews } from 'src/core/db/domain/school-page-news/school-page-news.entity';
+import { SchoolPage } from 'src/core/db/domain/school-page/school-page.entity';
+import { Brackets, Repository } from 'typeorm';
 
 @Injectable()
 export class MemberService {
   constructor(
-    @Inject(MEMBER_REPOSITORY)
+    @InjectRepository(Member)
     private memberRepository: Repository<Member>,
-    @Inject(MEMBER_SCHOOL_PAGE_SUBSCRIBE_REPOSITORY)
+    @InjectRepository(MemberSchoolPageSubscribe)
     private memberSchoolPageSubscribeRepository: Repository<MemberSchoolPageSubscribe>,
-    @Inject(SCHOOL_PAGE_REPOSITORY)
+    @InjectRepository(SchoolPage)
     private schoolPageRepository: Repository<SchoolPage>,
-    @Inject(SCHOOL_PAGE_NEWS_REPOSITORY)
+    @InjectRepository(SchoolPageNews)
     private schoolPageNewsRepository: Repository<SchoolPageNews>,
   ) {}
 

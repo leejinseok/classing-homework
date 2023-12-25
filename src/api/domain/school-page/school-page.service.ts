@@ -1,24 +1,22 @@
 import {
   ForbiddenException,
-  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Member } from 'src/core/db/domain/member/member.entity';
-import { MEMBER_REPOSITORY } from 'src/core/db/domain/member/member.providers';
-import { SchoolPage } from 'src/core/db/domain/school-page/school-page.entity';
-import { SCHOOL_PAGE_REPOSITORY } from 'src/core/db/domain/school-page/school-page.providers';
-import { Repository } from 'typeorm';
-import { SchoolPageRequest } from './dto/school-page.request';
+import { InjectRepository } from '@nestjs/typeorm';
 import { ErrorMessage } from 'src/api/config/constants';
 import { CommonStatus } from 'src/core/db/database.common.entity';
+import { Member } from 'src/core/db/domain/member/member.entity';
+import { SchoolPage } from 'src/core/db/domain/school-page/school-page.entity';
+import { Repository } from 'typeorm';
+import { SchoolPageRequest } from './dto/school-page.request';
 
 @Injectable()
 export class SchoolPageService {
   constructor(
-    @Inject(SCHOOL_PAGE_REPOSITORY)
+    @InjectRepository(SchoolPage)
     private readonly schoolPageRepository: Repository<SchoolPage>,
-    @Inject(MEMBER_REPOSITORY)
+    @InjectRepository(Member)
     private readonly memberRepository: Repository<Member>,
   ) {}
 

@@ -7,9 +7,6 @@ import { AuthService } from './auth.service';
 import { LoginRequest, SignUpRequest } from './dto/auth.reqeust';
 
 import { JwtService } from '@nestjs/jwt';
-import { MockFunctionMetadata, ModuleMocker } from 'jest-mock';
-
-const moduleMocker = new ModuleMocker(global);
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -39,14 +36,6 @@ describe('AuthController', () => {
           return {
             signAsync: jest.fn().mockResolvedValue('token'),
           };
-        }
-
-        if (typeof token === 'function') {
-          const mockMetadata = moduleMocker.getMetadata(
-            token,
-          ) as MockFunctionMetadata<any, any>;
-          const Mock = moduleMocker.generateFromMetadata(mockMetadata);
-          return new Mock();
         }
       })
       .compile();
@@ -78,7 +67,6 @@ describe('AuthController', () => {
       request.password = API_EXAMPLE.PASSWORD;
 
       const response = await controller.signUp(request);
-      console.log(response);
       expect(response.id).toEqual(1);
       expect(response.email).toEqual(API_EXAMPLE.STUDENT_EMAIL);
       expect(response.name).toEqual(API_EXAMPLE.STUDENT_NAME);

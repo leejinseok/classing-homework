@@ -1,17 +1,14 @@
 import {
   ForbiddenException,
-  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { ErrorMessage } from 'src/api/config/constants';
 import { CommonStatus } from 'src/core/db/database.common.entity';
 import { Member } from 'src/core/db/domain/member/member.entity';
-import { MEMBER_REPOSITORY } from 'src/core/db/domain/member/member.providers';
 import { SchoolPageNews } from 'src/core/db/domain/school-page-news/school-page-news.entity';
-import { SCHOOL_PAGE_NEWS_REPOSITORY } from 'src/core/db/domain/school-page-news/school-page-news.providers';
 import { SchoolPage } from 'src/core/db/domain/school-page/school-page.entity';
-import { SCHOOL_PAGE_REPOSITORY } from 'src/core/db/domain/school-page/school-page.providers';
 import { Repository } from 'typeorm';
 import {
   SchoolPageNewsRequest,
@@ -21,11 +18,11 @@ import {
 @Injectable()
 export class SchoolPageNewsService {
   constructor(
-    @Inject(SCHOOL_PAGE_NEWS_REPOSITORY)
+    @InjectRepository(SchoolPageNews)
     private readonly schoolPageNewsRepository: Repository<SchoolPageNews>,
-    @Inject(SCHOOL_PAGE_REPOSITORY)
+    @InjectRepository(SchoolPage)
     private readonly schoolPageRepository: Repository<SchoolPage>,
-    @Inject(MEMBER_REPOSITORY)
+    @InjectRepository(Member)
     private readonly memberRepository: Repository<Member>,
   ) {}
 

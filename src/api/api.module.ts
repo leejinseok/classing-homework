@@ -1,10 +1,13 @@
 import { Module, OnModuleInit } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { HttpExceptionFilter } from 'src/api/filter/http-exception.filter';
 import { CoreModule } from 'src/core/core.module';
-import { MemberRole } from 'src/core/db/domain/member/member.entity';
+import { MemberSchoolPageSubscribe } from 'src/core/db/domain/member/member-schoolPage-subscribe.entity';
+import { Member, MemberRole } from 'src/core/db/domain/member/member.entity';
+import { SchoolPageNews } from 'src/core/db/domain/school-page-news/school-page-news.entity';
+import { SchoolPage } from 'src/core/db/domain/school-page/school-page.entity';
 import { API_EXAMPLE, JwtConstants } from './config/constants';
 import { validationPipe } from './config/validate';
 import { AuthController } from './domain/auth/auth.controller';
@@ -54,7 +57,16 @@ const jwtModule = () => {
 };
 
 @Module({
-  imports: [ConfigModule.forRoot(), CoreModule, jwtModule()],
+  imports: [
+    CoreModule,
+    TypeOrmModule.forFeature([
+      Member,
+      MemberSchoolPageSubscribe,
+      SchoolPage,
+      SchoolPageNews,
+    ]),
+    jwtModule(),
+  ],
   controllers: [
     AuthController,
     MembersAuthenticatedController,

@@ -1,26 +1,24 @@
 import { Module } from '@nestjs/common';
-import { databaseProviders } from './db/database.providers';
-import {
-  memberSchoolPageSubscribeRepository,
-  memberRepository,
-} from './db/domain/member/member.providers';
-import { schoolPageNewsRepository } from './db/domain/school-page-news/school-page-news.providers';
-import { schoolPageRepository } from './db/domain/school-page/school-page.providers';
+import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 @Module({
-  providers: [
-    ...databaseProviders,
-    memberRepository,
-    memberSchoolPageSubscribeRepository,
-    schoolPageRepository,
-    schoolPageNewsRepository,
-  ],
-  exports: [
-    ...databaseProviders,
-    memberRepository,
-    memberSchoolPageSubscribeRepository,
-    schoolPageRepository,
-    schoolPageNewsRepository,
+  imports: [
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: process.env.DB_HOST,
+      port: +process.env.DB_PORT,
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+      logging: true,
+      synchronize: true,
+      dropSchema: true,
+      namingStrategy: new SnakeNamingStrategy(),
+    }),
   ],
 })
 export class CoreModule {}
