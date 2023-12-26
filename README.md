@@ -75,8 +75,22 @@ MemberSchoolPageSubscribe
 
 ## 🏃 Run Application
 
-```shellscript
+**Docker MySQL container load (필수)**
+
+```
 docker-compose -f docker/docker-compose-db.yml up -d
+```
+
+**test**
+
+```
+npm install
+npm run test
+```
+
+**run**
+
+```shellscript
 npm install
 npm run start
 ```
@@ -131,7 +145,7 @@ npm run start
 
   - api property, operation, validator 추가
 
-- [ ] validate pipe 테스트
+- [x] validate pipe 테스트
 
 ## 🧾 Memo
 

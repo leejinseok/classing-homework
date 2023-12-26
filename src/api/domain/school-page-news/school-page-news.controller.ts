@@ -35,7 +35,7 @@ import { SchoolPageNewsService } from './school-page-news.service';
 export class SchoolPageNewsController {
   constructor(private readonly schoolPageNewsService: SchoolPageNewsService) {}
 
-  @ApiOperation({ summary: '학교페이지 소식 조회' })
+  @ApiOperation({ summary: '소식 조회' })
   @ApiResponsePaginated(SchoolPageNewsResponse)
   @ApiQuery({ name: 'page', example: 0 })
   @ApiQuery({ name: 'size', example: 10 })
@@ -50,17 +50,18 @@ export class SchoolPageNewsController {
     @Query('size') size: number,
     @Query('schoolPageId') schoolPageId: number,
   ): Promise<PageResponse<SchoolPageNewsResponse>> {
-    const schoolPageNews = await this.schoolPageNewsService.findSchoolPageNews(
-      page,
-      size,
-      schoolPageId,
-    );
+    const schoolPageNewsPage =
+      await this.schoolPageNewsService.findSchoolPageNewsPage(
+        page,
+        size,
+        schoolPageId,
+      );
 
     const pageResponse = new PageResponse(
-      schoolPageNews[1],
+      schoolPageNewsPage[1],
       page,
       size,
-      schoolPageNews[0].map((schoolPageNews) => {
+      schoolPageNewsPage[0].map((schoolPageNews) => {
         return SchoolPageNewsResponse.create(schoolPageNews);
       }),
     );

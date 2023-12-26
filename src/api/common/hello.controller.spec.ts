@@ -12,14 +12,12 @@ describe('RootController', () => {
     controller = module.get<HelloController>(HelloController);
   });
 
-  it('shoud be define', () => {
+  it('주입확인', () => {
     expect(controller).toBeDefined();
   });
 
-  describe('getHello', () => {
-    it('shoud response is hello', async () => {
-      const response = await controller.getHello();
-      expect(response).toEqual('hello');
-    });
+  it('hello 테스트', async () => {
+    const response = await controller.getHello();
+    expect(response).toEqual('hello');
   });
 });

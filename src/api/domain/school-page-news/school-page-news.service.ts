@@ -99,7 +99,7 @@ export class SchoolPageNewsService {
     return schoolPageNews;
   }
 
-  findSchoolPageNews(
+  findSchoolPageNewsPage(
     page: number,
     size: number,
     schoolPageId: number,

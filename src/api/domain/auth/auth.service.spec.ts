@@ -7,19 +7,18 @@ import {
 import { API_EXAMPLE } from '../../config/constants';
 import { AuthService } from './auth.service';
 import { LoginRequest, SignUpRequest } from './dto/auth.reqeust';
+import { Repository } from 'typeorm';
+import { EncryptUtils } from '../../../common/util/encrypt.util';
+import { BcryptUtils } from '../../../common/util/bcrypt.util';
 
 class MockRepository {
-  findOne(id: number) {
-    return Member.createStudentSample();
-  }
-
-  save(member: Member) {
-    return Member.createStudentSample();
-  }
+  findOne() {}
+  save() {}
 }
 
 describe('AuthService', () => {
   let service: AuthService;
+  let repository: Repository<Member>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -32,39 +31,68 @@ describe('AuthService', () => {
       ],
     }).compile();
     service = module.get<AuthService>(AuthService);
+    repository = module.get<Repository<Member>>(getRepositoryToken(Member));
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
 
-  describe('로그인', () => {
-    it('shoud be response is', async () => {
-      const request = new LoginRequest();
-      request.email = API_EXAMPLE.STUDENT_EMAIL;
-      request.password = API_EXAMPLE.PASSWORD;
-      const member = await service.login(request);
+  it('로그인', async () => {
+    const request = new LoginRequest();
+    request.email = API_EXAMPLE.STUDENT_EMAIL;
+    request.password = API_EXAMPLE.PASSWORD;
 
-      expect(member.email).toBeDefined();
-      expect(member.name).toBeDefined();
-      expect(member.password).toBeDefined();
-      expect(member.role).toEqual(MemberRole.STUDENT);
-    });
+    const member = new Member();
+    member.id = 1;
+    member.name = API_EXAMPLE.STUDENT_NAME;
+    member.email = await EncryptUtils.encrypt(request.email);
+    const { hash } = await BcryptUtils.hash(request.password);
+    member.password = hash;
+    member.role = MemberRole.STUDENT;
+    member.createdAt = new Date();
+    member.updatedAt = new Date();
+
+    jest.spyOn(repository, 'findOne').mockResolvedValue(member);
+    const reuslt = await service.login(request);
+
+    expect(reuslt.id).toEqual(member.id);
+    expect(await EncryptUtils.decrypt(reuslt.email)).toEqual(request.email);
+    expect(reuslt.name).toEqual(member.name);
+    expect(reuslt.role).toEqual(member.role);
+    expect(reuslt.createdAt).toBeDefined();
+    expect(reuslt.updatedAt).toBeDefined();
   });
 
-  describe('회원가입', () => {
-    it('shoud be response is', async () => {
-      const request = new SignUpRequest();
-      request.email = API_EXAMPLE.STUDENT_EMAIL;
-      request.name = API_EXAMPLE.STUDENT_NAME;
-      request.password = API_EXAMPLE.PASSWORD;
-      request.role = MemberRole.STUDENT;
+  it('회원가입', async () => {
+    const request = new SignUpRequest();
+    request.email = API_EXAMPLE.STUDENT_EMAIL;
+    request.name = API_EXAMPLE.STUDENT_NAME;
+    request.password = API_EXAMPLE.PASSWORD;
+    request.role = MemberRole.STUDENT;
 
-      const member = await service.signUp(request);
-      expect(member.email).toBeDefined();
-      expect(member.name).toBeDefined();
-      expect(member.password).toBeDefined();
-      expect(member.role).toBeDefined();
+    jest.spyOn(repository, 'save').mockImplementation((entity: Member) => {
+      entity.id = 1;
+      entity.createdAt = new Date();
+      entity.updatedAt = new Date();
+      return null;
     });
+    const member = await service.signUp(request);
+
+    expect(repository.save).toHaveBeenCalledWith(
+      expect.objectContaining({
+        ...request,
+      }),
+    );
+
+    expect(await EncryptUtils.decrypt(member.email)).toEqual(
+      API_EXAMPLE.STUDENT_EMAIL,
+    );
+    expect(member.id).toEqual(1);
+    expect(member.name).toEqual(request.name);
+    expect(member.password).toBeDefined();
+    expect(member.role).toEqual(request.role);
+    expect(member.createdAt).toBeDefined();
+    expect(member.updatedAt).toBeDefined();
   });
 });

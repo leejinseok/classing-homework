@@ -37,80 +37,74 @@ describe('SchoolPageController', () => {
     expect(service).toBeDefined();
   });
 
-  describe('학교페이지 생성', () => {
-    it('응답확인', async () => {
-      const admin = await Member.createAdminSample();
+  it('학교페이지 생성', async () => {
+    const admin = await Member.createAdminSample();
 
-      const schoolPageMockValue = new SchoolPage();
-      schoolPageMockValue.id = 1;
-      schoolPageMockValue.schoolName = API_EXAMPLE.SCHOOL_NAME;
-      schoolPageMockValue.region = '서울';
-      schoolPageMockValue.createdBy = admin;
-      schoolPageMockValue.createdAt = new Date();
-      schoolPageMockValue.updatedAt = new Date();
+    const schoolPageMockValue = new SchoolPage();
+    schoolPageMockValue.id = 1;
+    schoolPageMockValue.schoolName = API_EXAMPLE.SCHOOL_NAME;
+    schoolPageMockValue.region = '서울';
+    schoolPageMockValue.createdBy = admin;
+    schoolPageMockValue.createdAt = new Date();
+    schoolPageMockValue.updatedAt = new Date();
 
-      jest.spyOn(service, 'save').mockResolvedValue(schoolPageMockValue);
+    jest.spyOn(service, 'save').mockResolvedValue(schoolPageMockValue);
 
-      const schoolPageRequest = expect.any(SchoolPageRequest);
-      const req = {
-        user: {
-          sub: 1,
-        },
-      };
+    const schoolPageRequest = expect.any(SchoolPageRequest);
+    const req = {
+      user: {
+        sub: 1,
+      },
+    };
 
-      const response = await controller.createShoolPage(schoolPageRequest, req);
-      expect(response.id).toEqual(schoolPageMockValue.id);
-      expect(response.schoolName).toEqual(schoolPageMockValue.schoolName);
-      expect(response.region).toEqual(schoolPageMockValue.region);
-      expect(response.createdAt).toEqual(schoolPageMockValue.createdAt);
-      expect(response.updatedAt).toEqual(schoolPageMockValue.updatedAt);
-    });
+    const response = await controller.createShoolPage(schoolPageRequest, req);
+    expect(response.id).toEqual(schoolPageMockValue.id);
+    expect(response.schoolName).toEqual(schoolPageMockValue.schoolName);
+    expect(response.region).toEqual(schoolPageMockValue.region);
+    expect(response.createdAt).toEqual(schoolPageMockValue.createdAt);
+    expect(response.updatedAt).toEqual(schoolPageMockValue.updatedAt);
   });
 
-  describe('학교페이지 수정', () => {
-    it('응답확인', async () => {
-      const admin = await Member.createAdminSample();
+  it('학교페이지 수정', async () => {
+    const admin = await Member.createAdminSample();
 
-      const schoolPageMockValue = new SchoolPage();
-      schoolPageMockValue.id = 1;
-      schoolPageMockValue.schoolName = API_EXAMPLE.SCHOOL_NAME;
-      schoolPageMockValue.region = '서울';
-      schoolPageMockValue.createdBy = admin;
-      schoolPageMockValue.createdAt = new Date();
-      schoolPageMockValue.updatedAt = new Date();
+    const schoolPageMockValue = new SchoolPage();
+    schoolPageMockValue.id = 1;
+    schoolPageMockValue.schoolName = API_EXAMPLE.SCHOOL_NAME;
+    schoolPageMockValue.region = '서울';
+    schoolPageMockValue.createdBy = admin;
+    schoolPageMockValue.createdAt = new Date();
+    schoolPageMockValue.updatedAt = new Date();
 
-      const schoolPageRequest = expect.any(SchoolPageRequest);
-      const req = {
-        user: {
-          sub: 1,
-        },
-      };
+    const schoolPageRequest = expect.any(SchoolPageRequest);
+    const req = {
+      user: {
+        sub: 1,
+      },
+    };
 
-      jest.spyOn(service, 'update').mockResolvedValue(schoolPageMockValue);
+    jest.spyOn(service, 'update').mockResolvedValue(schoolPageMockValue);
 
-      const response = await controller.updateSchoolPage(
-        1,
-        schoolPageRequest,
-        req,
-      );
-      expect(response.id).toEqual(schoolPageMockValue.id);
-      expect(response.schoolName).toEqual(schoolPageMockValue.schoolName);
-      expect(response.region).toEqual(schoolPageMockValue.region);
-      expect(response.createdAt).toEqual(schoolPageMockValue.createdAt);
-      expect(response.updatedAt).toEqual(schoolPageMockValue.updatedAt);
-    });
+    const response = await controller.updateSchoolPage(
+      1,
+      schoolPageRequest,
+      req,
+    );
+    expect(response.id).toEqual(schoolPageMockValue.id);
+    expect(response.schoolName).toEqual(schoolPageMockValue.schoolName);
+    expect(response.region).toEqual(schoolPageMockValue.region);
+    expect(response.createdAt).toEqual(schoolPageMockValue.createdAt);
+    expect(response.updatedAt).toEqual(schoolPageMockValue.updatedAt);
   });
 
-  describe('학교페이지 삭제', () => {
-    it('응답확인', async () => {
-      const req = {
-        user: {
-          sub: 1,
-        },
-      };
+  it('학교페이지 삭제', async () => {
+    const req = {
+      user: {
+        sub: 1,
+      },
+    };
 
-      jest.spyOn(service, 'delete').mockResolvedValue();
-      await controller.deleteSchoolPage(1, req);
-    });
+    jest.spyOn(service, 'delete').mockResolvedValue();
+    await controller.deleteSchoolPage(1, req);
   });
 });
