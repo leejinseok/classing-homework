@@ -1,4 +1,4 @@
-import { API_EXAMPLE } from 'src/api/config/constants';
+import { API_EXAMPLE } from '../../api/config/constants';
 import { BcryptUtils } from './bcrypt.util';
 
 describe('PasswordUtility', () => {

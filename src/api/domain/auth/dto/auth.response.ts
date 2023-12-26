@@ -19,12 +19,16 @@ export class SignUpResposne {
   @ApiProperty({ example: MemberRole.ADMIN })
   role: MemberRole;
 
+  @ApiProperty()
+  createdAt: Date;
+
   static async create(member: Member): Promise<SignUpResposne> {
     const response = new SignUpResposne();
     response.id = member.id;
     response.email = await EncryptUtils.decrypt(member.email);
     response.name = member.name;
     response.role = member.role;
+    response.createdAt = member.createdAt;
     return response;
   }
 }

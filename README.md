@@ -121,9 +121,9 @@ npm run start
 
   - [x] root controller 테스트
   - [x] auth controller 테스트
-  - [ ] auth service 테스트
-  - [ ] school page controller 테스트
-  - [ ] school page service 테스트
+  - [x] auth service 테스트
+  - [x] school page controller 테스트
+  - [x] school page service 테스트
   - [ ] school page news controller 테스트
   - [ ] school page news service 테스트
 

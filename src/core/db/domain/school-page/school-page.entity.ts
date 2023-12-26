@@ -65,10 +65,6 @@ export class SchoolPage extends Common {
     this.region = region;
   }
 
-  delete() {
-    this.status = CommonStatus.DELETED;
-  }
-
   doesMemberCreated(member: Member): boolean {
     return member.id === this.createdBy.id;
   }

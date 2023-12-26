@@ -54,7 +54,7 @@ export class SchoolPageService {
     request: SchoolPageRequest,
     schoolPageId: number,
     memberId: number,
-  ): Promise<any> {
+  ): Promise<SchoolPage> {
     const schoolPage = await this.findOnlyActiveById(schoolPageId);
     const doesMemberCreated = schoolPage.doesMemberCreatedById(memberId);
 
@@ -96,7 +96,11 @@ export class SchoolPageService {
       );
     }
 
-    schoolPage.delete();
-    this.schoolPageRepository.update({ id: schoolPageId }, { ...schoolPage });
+    await this.schoolPageRepository.update(
+      { id: schoolPageId },
+      {
+        status: CommonStatus.DELETED,
+      },
+    );
   }
 }

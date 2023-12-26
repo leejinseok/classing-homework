@@ -1,7 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { API_EXAMPLE } from 'src/api/config/constants';
-import { Member, MemberRole } from 'src/core/db/domain/member/member.entity';
+import {
+  Member,
+  MemberRole,
+} from '../../../core/db/domain/member/member.entity';
+import { API_EXAMPLE } from '../../config/constants';
 import { AuthService } from './auth.service';
 import { LoginRequest, SignUpRequest } from './dto/auth.reqeust';
 

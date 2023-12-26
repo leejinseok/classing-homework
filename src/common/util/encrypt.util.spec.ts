@@ -1,4 +1,4 @@
-import { API_EXAMPLE } from 'src/api/config/constants';
+import { API_EXAMPLE } from '../../api/config/constants';
 import { EncryptUtils } from './encrypt.util';
 
 describe('EncryptUtil', () => {
