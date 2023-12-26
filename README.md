@@ -138,8 +138,10 @@ npm run start
   - [x] auth service 테스트
   - [x] school page controller 테스트
   - [x] school page service 테스트
-  - [ ] school page news controller 테스트
-  - [ ] school page news service 테스트
+  - [x] school page news controller 테스트
+  - [x] school page news service 테스트
+  - [ ] member authenticated controller 테스트
+  - [ ] member service 테스트
 
 - [x] swagger 교정
 

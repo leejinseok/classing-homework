@@ -89,11 +89,9 @@ export class SchoolPageNewsService {
       );
     }
 
-    schoolPageNews.update(content);
-
-    this.schoolPageNewsRepository.update(
+    await this.schoolPageNewsRepository.update(
       { id: schoolPageNewsId },
-      { ...schoolPageNews },
+      { content },
     );
 
     return schoolPageNews;

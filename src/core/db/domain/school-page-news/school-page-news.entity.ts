@@ -41,8 +41,4 @@ export class SchoolPageNews extends Common {
     schoolPageNews.createdBy = createdBy;
     return schoolPageNews;
   }
-
-  update(content: string) {
-    this.content = content;
-  }
 }
