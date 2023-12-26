@@ -16,7 +16,7 @@ services:
     container_name: local-test-db
     restart: always
     ports:
-      - 3307:3307
+      - 3307:3306
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: classting_homework

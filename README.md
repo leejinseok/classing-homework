@@ -133,15 +133,15 @@ npm run start
 
 - [ ] 테스트코드
 
-  - [x] root controller 테스트
   - [x] auth controller 테스트
   - [x] auth service 테스트
   - [x] school page controller 테스트
   - [x] school page service 테스트
   - [x] school page news controller 테스트
   - [x] school page news service 테스트
-  - [ ] member authenticated controller 테스트
-  - [ ] member service 테스트
+  - [x] member authenticated controller 테스트
+  - [x] member service 테스트
+  - [ ] auth controller e2e 테스트
 
 - [x] swagger 교정
 

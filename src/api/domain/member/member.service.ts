@@ -93,11 +93,7 @@ export class MemberService {
     );
   }
 
-  async findSchoolPagesSubscribed(
-    page: number,
-    size: number,
-    memberId: number,
-  ) {
+  findSchoolPagesSubscribed(page: number, size: number, memberId: number) {
     return this.memberSchoolPageSubscribeRepository
       .createQueryBuilder('subscribe')
       .innerJoinAndSelect('subscribe.schoolPage', 'schoolPage')

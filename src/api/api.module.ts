@@ -8,6 +8,7 @@ import { MemberSchoolPageSubscribe } from '../core/db/domain/member/member-schoo
 import { Member, MemberRole } from '../core/db/domain/member/member.entity';
 import { SchoolPageNews } from '../core/db/domain/school-page-news/school-page-news.entity';
 import { SchoolPage } from '../core/db/domain/school-page/school-page.entity';
+import { HelloController } from './common/hello.controller';
 import { API_EXAMPLE, JwtConstants } from './config/constants';
 import { validationPipe } from './config/validate';
 import { AuthController } from './domain/auth/auth.controller';
@@ -69,6 +70,7 @@ const jwtModule = () => {
     jwtModule(),
   ],
   controllers: [
+    HelloController,
     AuthController,
     MembersAuthenticatedController,
     SchoolPageController,

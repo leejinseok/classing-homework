@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from '../../config/metadata';
@@ -26,6 +26,7 @@ export class AuthController {
   @ApiOperation({ summary: '로그인' })
   @ApiResponse({ type: TokenResponse, status: 200 })
   @Public()
+  @HttpCode(HttpStatus.OK)
   @Post('/login')
   async login(@Body() request: LoginRequest): Promise<TokenResponse> {
     const member = await this.authService.login(request);
