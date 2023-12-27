@@ -2,6 +2,7 @@ import {
   CanActivate,
   ExecutionContext,
   Injectable,
+  Provider,
   UnauthorizedException,
 } from '@nestjs/common';
 import { APP_GUARD, Reflector } from '@nestjs/core';
@@ -47,7 +48,7 @@ export class AuthGuard implements CanActivate {
   }
 }
 
-export const authGuardProvider = {
+export const authGuardProvider: Provider = {
   provide: APP_GUARD,
   useClass: AuthGuard,
 };

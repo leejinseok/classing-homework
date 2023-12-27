@@ -1,4 +1,9 @@
-import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
+import {
+  ArgumentsHost,
+  Catch,
+  ExceptionFilter,
+  Provider,
+} from '@nestjs/common';
 import { APP_FILTER } from '@nestjs/core';
 import { Response } from 'express';
 import { ValidateException } from '../exception/validate-exception';
@@ -17,7 +22,7 @@ export class ValidateExceptionFilter implements ExceptionFilter {
   }
 }
 
-export const validateExceptionFilterProvider = {
+export const validateExceptionFilterProvider: Provider = {
   provide: APP_FILTER,
   useClass: ValidateExceptionFilter,
 };

@@ -1,4 +1,9 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  Provider,
+} from '@nestjs/common';
 import { APP_GUARD, Reflector } from '@nestjs/core';
 import { MemberRole } from '../../core/db/domain/member/member.entity';
 import { ROLES_KEY } from '../config/metadata';
@@ -21,7 +26,7 @@ export class RolesGuard implements CanActivate {
   }
 }
 
-export const roleGuardProvider = {
+export const roleGuardProvider: Provider = {
   provide: APP_GUARD,
   useClass: RolesGuard,
 };

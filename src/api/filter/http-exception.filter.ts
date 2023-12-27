@@ -1,8 +1,9 @@
 import {
-  ExceptionFilter,
-  Catch,
   ArgumentsHost,
+  Catch,
+  ExceptionFilter,
   HttpException,
+  Provider,
 } from '@nestjs/common';
 import { APP_FILTER } from '@nestjs/core';
 import { Response } from 'express';
@@ -21,7 +22,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
   }
 }
 
-export const httpExceptionFilterProvider = {
+export const httpExceptionFilterProvider: Provider = {
   provide: APP_FILTER,
   useClass: HttpExceptionFilter,
 };
