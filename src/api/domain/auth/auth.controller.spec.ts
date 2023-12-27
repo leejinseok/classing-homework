@@ -14,8 +14,8 @@ import {
 import { API_EXAMPLE } from '../../config/constants';
 
 class MockAuthService {
-  login() {}
-  signUp() {}
+  login = jest.fn();
+  signUp = jest.fn();
 }
 
 describe('AuthController', () => {

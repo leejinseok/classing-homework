@@ -12,8 +12,8 @@ import { EncryptUtils } from '../../../common/util/encrypt.util';
 import { BcryptUtils } from '../../../common/util/bcrypt.util';
 
 class MockRepository {
-  findOne() {}
-  save() {}
+  findOne = jest.fn();
+  save = jest.fn();
 }
 
 describe('AuthService', () => {
@@ -34,8 +34,9 @@ describe('AuthService', () => {
     repository = module.get<Repository<Member>>(getRepositoryToken(Member));
   });
 
-  it('should be defined', () => {
+  it('주입확인', () => {
     expect(service).toBeDefined();
+    expect(repository).toBeDefined();
   });
 
   it('로그인', async () => {

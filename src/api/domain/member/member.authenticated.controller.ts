@@ -83,8 +83,8 @@ export class MembersAuthenticatedController {
 
     return new PageResponse(
       schoolPagesSubscribed[1],
-      page,
-      size,
+      +page,
+      +size,
       schoolPagesSubscribed[0].map((schoolPageSubscribed) =>
         SchoolPageResponse.create(schoolPageSubscribed.schoolPage),
       ),

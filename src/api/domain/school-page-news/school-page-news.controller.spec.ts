@@ -14,10 +14,10 @@ import { SchoolPageNewsService } from './school-page-news.service';
 import { CommonStatus } from '../../../core/db/database.common.entity';
 
 class MockSchoolPageNewsService {
-  findSchoolPageNewsPage() {}
-  save() {}
-  update() {}
-  delete() {}
+  findSchoolPageNewsPage = jest.fn();
+  save = jest.fn();
+  update = jest.fn();
+  delete = jest.fn();
 }
 
 describe('SchoolPageNewsController', () => {

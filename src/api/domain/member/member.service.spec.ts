@@ -7,7 +7,6 @@ import { Member } from '../../../core/db/domain/member/member.entity';
 import { SchoolPageNews } from '../../../core/db/domain/school-page-news/school-page-news.entity';
 import { SchoolPage } from '../../../core/db/domain/school-page/school-page.entity';
 import { MemberService } from './member.service';
-import { sign } from 'crypto';
 
 class MockRepository {
   findOne = jest.fn();

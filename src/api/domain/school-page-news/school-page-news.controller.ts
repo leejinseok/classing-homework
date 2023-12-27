@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Patch,
   Post,
@@ -59,8 +61,8 @@ export class SchoolPageNewsController {
 
     const pageResponse = new PageResponse(
       schoolPageNewsPage[1],
-      page,
-      size,
+      +page,
+      +size,
       schoolPageNewsPage[0].map((schoolPageNews) => {
         return SchoolPageNewsResponse.create(schoolPageNews);
       }),
@@ -70,7 +72,7 @@ export class SchoolPageNewsController {
   }
 
   @ApiOperation({ summary: '소식 생성' })
-  @ApiResponse({ type: SchoolPageNewsResponse, status: 201 })
+  @ApiResponse({ type: SchoolPageNewsResponse, status: HttpStatus.CREATED })
   @Roles(MemberRole.ADMIN)
   @Post()
   async createShoolPageNews(
@@ -87,12 +89,13 @@ export class SchoolPageNewsController {
   }
 
   @ApiOperation({ summary: '소식 수정' })
-  @ApiResponse({ type: SchoolPageNewsResponse, status: 200 })
+  @ApiResponse({ type: SchoolPageNewsResponse, status: HttpStatus.OK })
   @ApiParam({
     name: 'schoolPageNewsId',
     example: 1,
     description: '수정할 소식의 ID',
   })
+  @HttpCode(HttpStatus.OK)
   @Roles(MemberRole.ADMIN)
   @Patch('/:schoolPageNewsId')
   async updateSchoolPageNews(

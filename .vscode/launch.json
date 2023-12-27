@@ -27,6 +27,16 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "start test:e2e",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "test:e2e"],
+      "sourceMaps": true,
+      "console": "integratedTerminal",
+      "restart": true
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "start",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "start", "--", "--inspect-brk"],

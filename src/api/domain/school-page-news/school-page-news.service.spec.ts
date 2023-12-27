@@ -161,13 +161,11 @@ describe('SchoolPageNewsService', () => {
       }),
     );
 
-    expect(schoolPageNewsRepository.update).toHaveBeenCalledWith(
-      {
+    expect(schoolPageNewsRepository.save).toHaveBeenCalledWith(
+      expect.objectContaining({
         id: schoolPageNews.id,
-      },
-      {
         content: request.content,
-      },
+      }),
     );
 
     expect(result.id).toEqual(schoolPageNews.id);

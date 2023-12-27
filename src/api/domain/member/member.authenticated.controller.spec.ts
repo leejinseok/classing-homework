@@ -9,7 +9,7 @@ import {
 import { SchoolPage } from '../../../core/db/domain/school-page/school-page.entity';
 import { API_EXAMPLE } from '../../config/constants';
 import { MemberService } from './member.service';
-import { MembersAuthenticatedController } from './members.authenticated.controller';
+import { MembersAuthenticatedController } from './member.authenticated.controller';
 import { SchoolPageNews } from '../../../core/db/domain/school-page-news/school-page-news.entity';
 
 class MockMemberService {

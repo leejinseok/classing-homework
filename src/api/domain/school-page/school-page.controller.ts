@@ -2,6 +2,8 @@ import {
   Body,
   Controller,
   Delete,
+  HttpCode,
+  HttpStatus,
   Param,
   Patch,
   Post,
@@ -51,6 +53,7 @@ export class SchoolPageController {
     description: '수정할 학교페이지 ID',
   })
   @Roles(MemberRole.ADMIN)
+  @HttpCode(HttpStatus.OK)
   @Patch('/:schoolPageId')
   async updateSchoolPage(
     @Param('schoolPageId') schoolPageId: number,

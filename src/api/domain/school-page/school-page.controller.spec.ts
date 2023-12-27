@@ -8,9 +8,9 @@ import { SchoolPageController } from './school-page.controller';
 import { SchoolPageService } from './school-page.service';
 
 class MockSchoolPageService {
-  save() {}
-  update() {}
-  delete() {}
+  save = jest.fn();
+  update = jest.fn();
+  delete = jest.fn();
 }
 
 describe('SchoolPageController', () => {

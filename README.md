@@ -78,14 +78,21 @@ MemberSchoolPageSubscribe
 **Docker MySQL container load (필수)**
 
 ```
-docker-compose -f docker/docker-compose-db.yml up -d
+npm run start:docker
 ```
 
-**test**
+**Unit test**
 
 ```
 npm install
 npm run test
+```
+
+**E2E Test**
+
+```
+npm install
+npm run test:e2e
 ```
 
 **run**
@@ -131,7 +138,7 @@ npm run start
     - 소식은 구독 시점부터
     - 구독을 취소해도 구독을 취소하기 이전의 소식은 불러옴
 
-- [ ] 테스트코드
+- [x] 테스트코드
 
   - [x] auth controller 테스트
   - [x] auth service 테스트
@@ -141,7 +148,7 @@ npm run start
   - [x] school page news service 테스트
   - [x] member authenticated controller 테스트
   - [x] member service 테스트
-  - [ ] auth controller e2e 테스트
+  - [x] api module e2e 테스트
 
 - [x] swagger 교정
 

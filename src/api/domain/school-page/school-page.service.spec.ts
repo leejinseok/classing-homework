@@ -8,12 +8,10 @@ import { API_EXAMPLE } from '../../config/constants';
 import { SchoolPageRequest } from './dto/school-page.request';
 import { SchoolPageService } from './school-page.service';
 
-class MockSchoolPageRepository {
-  save() {}
-  async update() {}
-}
-class MockMemberRepository {
-  findOne() {}
+class MockRepository {
+  save = jest.fn();
+  update = jest.fn();
+  findOne = jest.fn();
 }
 
 describe('SchoolPageService ', () => {
@@ -27,11 +25,11 @@ describe('SchoolPageService ', () => {
       providers: [
         {
           provide: getRepositoryToken(SchoolPage),
-          useClass: MockSchoolPageRepository,
+          useClass: MockRepository,
         },
         {
           provide: getRepositoryToken(Member),
-          useClass: MockMemberRepository,
+          useClass: MockRepository,
         },
       ],
     }).compile();

@@ -89,11 +89,9 @@ export class SchoolPageNewsService {
       );
     }
 
-    await this.schoolPageNewsRepository.update(
-      { id: schoolPageNewsId },
-      { content },
-    );
+    schoolPageNews.update(content);
 
+    await this.schoolPageNewsRepository.save(schoolPageNews);
     return schoolPageNews;
   }
 
