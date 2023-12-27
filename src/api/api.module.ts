@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -22,6 +22,7 @@ import { httpExceptionFilterProvider } from './filter/http-exception.filter';
 import { validateExceptionFilterProvider } from './filter/validate-exception.filter';
 import { authGuardProvider } from './guard/auth.guard';
 import { roleGuardProvider } from './guard/roles.guard';
+import { LoggerMiddleware } from './logger/logger.middleware';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { roleGuardProvider } from './guard/roles.guard';
     SchoolPageNewsController,
   ],
   providers: [
+    Logger,
     allExceptionsFilterProvider,
     httpExceptionFilterProvider,
     validateExceptionFilterProvider,
@@ -62,4 +64,8 @@ import { roleGuardProvider } from './guard/roles.guard';
     SchoolPageNewsService,
   ],
 })
-export class ApiModule {}
+export class ApiModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
+}

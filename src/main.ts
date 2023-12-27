@@ -2,9 +2,12 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import { ApiModule } from './api/api.module';
+import { winstonLogger } from './common/util/winston.util';
 
 async function bootstrap() {
-  const app = await NestFactory.create(ApiModule);
+  const app = await NestFactory.create(ApiModule, {
+    logger: winstonLogger,
+  });
   app.use(helmet());
   app.enableCors();
 
