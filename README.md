@@ -124,9 +124,19 @@ npm run test:e2e
 
 ## 🏃 Run Application
 
+실행 스크립트
+
 ```shellscript
 npm run start
 ```
+
+3000번 포트로 실행된다
+
+![](docs/application-start.png)
+
+Swagger
+
+http://localhost:3000/api-docs/index.html
 
 ![](docs/swagger.jpeg)
 
