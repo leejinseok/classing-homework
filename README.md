@@ -22,15 +22,15 @@ winston 로거를 활용하였다. 콘솔로그, 일반 파일로그, 에러 파
 
 winston daily 옵션을 통해서 최대 몇일까지 파일을 보관하는지에 대한 여부를 설정하였다.
 
+**DB**
+
+데이터 베이스는 익숙하게 사용해온 mysql을 사용하였다. nest에서 inmemory db가 익숙하지 않아 docker로 mysql container를 띄우는 방식으로 진행하였다.
+
 ## 🏛️ Structure
 
 기본적으로 api, core 모듈로 분리하여 개발하였다.
 
 api 모듈은 presentation, application layer, core는 persistency layer 성격을 띈다.
-
-**DB**
-
-데이터 베이스는 익숙하게 사용해온 mysql을 사용하였다. nest에서 inmemory db가 익숙하지 않아 docker로 mysql container를 띄우는 방식으로 진행하였다.
 
 ### Api
 
