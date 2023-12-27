@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { MemberSchoolPageSubscribe } from './db/domain/member/member-schoolPage-subscribe.entity';
@@ -12,18 +12,27 @@ import { SchoolPage } from './db/domain/school-page/school-page.entity';
     ConfigModule.forRoot({
       envFilePath: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
     }),
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: process.env.DB_HOST,
-      port: +process.env.DB_PORT,
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
-      entities: [Member, MemberSchoolPageSubscribe, SchoolPage, SchoolPageNews],
-      logging: process.env.DB_LOGGING === 'true',
-      dropSchema: process.env.DB_DROP_SCHEME === 'true',
-      synchronize: true,
-      namingStrategy: new SnakeNamingStrategy(),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: 'mysql',
+        host: configService.get('DB_HOST'),
+        port: configService.get('DB_PORT'),
+        username: configService.get('DB_USERNAME'),
+        password: configService.get('DB_PASSWORD'),
+        database: configService.get('DB_DATABASE'),
+        entities: [
+          Member,
+          MemberSchoolPageSubscribe,
+          SchoolPage,
+          SchoolPageNews,
+        ],
+        logging: configService.get('DB_LOGGING'),
+        synchronize: configService.get('DB_SYNC'),
+        dropSchema: configService.get('DB_DROP_SCHEMA'),
+        namingStrategy: new SnakeNamingStrategy(),
+      }),
     }),
   ],
 })
