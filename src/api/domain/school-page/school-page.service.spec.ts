@@ -106,13 +106,11 @@ describe('SchoolPageService ', () => {
     jest.spyOn(schoolPageRepository, 'update');
     await service.delete(schoolPage.id, createdBy.id);
 
-    expect(schoolPageRepository.update).toHaveBeenCalledWith(
-      {
+    expect(schoolPageRepository.save).toHaveBeenCalledWith(
+      expect.objectContaining({
         id: schoolPage.id,
-      },
-      {
         status: CommonStatus.DELETED,
-      },
+      }),
     );
   });
 });

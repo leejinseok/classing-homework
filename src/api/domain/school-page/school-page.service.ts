@@ -96,11 +96,7 @@ export class SchoolPageService {
       );
     }
 
-    await this.schoolPageRepository.update(
-      { id: schoolPageId },
-      {
-        status: CommonStatus.DELETED,
-      },
-    );
+    schoolPage.delete();
+    await this.schoolPageRepository.save(schoolPage);
   }
 }

@@ -60,6 +60,10 @@ export class SchoolPage extends Common {
     return schoolPage;
   }
 
+  delete() {
+    this.status = CommonStatus.DELETED;
+  }
+
   update(schoolName: string, region: string) {
     this.schoolName = schoolName;
     this.region = region;
