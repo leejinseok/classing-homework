@@ -386,4 +386,8 @@ describe('ApiModule (e2e)', () => {
         });
     });
   });
+
+  afterAll(async () => {
+    await app.close();
+  });
 });

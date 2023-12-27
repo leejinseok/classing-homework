@@ -2,9 +2,11 @@
 
 ## 🏠 Overview
 
-**소감**
+주 언어가 java, spring boot여서 처음에는 spring으로 프로젝트를 시작했지만 클래스팅에서 표준으로 사용하고 있는 nestjs에 도전해보고 싶은 마음이 들어서 nestjs로 개발하게 되었다. spring과 유사한 점이 많아서 개발하는데 아주 생소하지는 않았다.
 
-주 언어가 java, spring boot여서 고민이 많았지만 클래스팅에서 표준으로 사용하고 있는 nestjs를 도전해보았다. spring과 유사한 점이 많아서 개발하는데 아주 생소하지는 않았다. nestjs가 최근 우아한형제들에서도 spring과 함께 백엔드 표준으로 자리를 잡았다고 하는데 장점이 많은 것 같았고 이번 기회에 배울 수 있어서 좋은 기회가 되었다.
+nestjs가 최근 우아한형제들에서도 spring과 함께 백엔드 표준으로 자리를 잡았다고 하는데 장점이 많은 것 같았고 이번 기회에 배울 수 있어서 좋은 기회가 되었다.
+
+jest에서의 테스트 코드를 짜본 적이 없어서 테스트 코드를 짤수 있을지 걱정이 되었지만 spring에서 사용하는 junit과 철학 자체는 비슷해서 chatgpt에게 물어보면서 하니까 테스트 코드도 마무리 지을 수 있었다.
 
 ## 🏛️ Structure
 
@@ -42,10 +44,10 @@ Member
 SchoolPage
 
 - id
-- name
+- schoolName
 - region
 
-SchoolPageNewsFeed
+SchoolPageNews
 
 - id
 - schoolPageId
@@ -56,6 +58,7 @@ Member
 
 - id
 - name
+- email
 - role (ADMIN, PARENT, STUDENT, TEACHER)
 
 MemberSchoolPageSubscribe
