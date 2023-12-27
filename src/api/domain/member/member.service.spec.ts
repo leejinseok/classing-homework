@@ -128,14 +128,12 @@ describe('MemberService', () => {
         getOne: jest.fn().mockResolvedValue(subscribe),
       } as any);
 
-    jest.spyOn(memberSchoolPageSubscribeRepository, 'update');
+    jest.spyOn(memberSchoolPageSubscribeRepository, 'save');
     await service.unsubscribeSchoolPage(schoolPage.id, me.id);
 
-    expect(memberSchoolPageSubscribeRepository.update).toHaveBeenCalledWith(
+    expect(memberSchoolPageSubscribeRepository.save).toHaveBeenCalledWith(
       expect.objectContaining({
         id: subscribe.id,
-      }),
-      expect.objectContaining({
         status: subscribe.status,
       }),
     );

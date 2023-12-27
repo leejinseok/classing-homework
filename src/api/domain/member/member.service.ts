@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -80,17 +81,12 @@ export class MemberService {
       .andWhere('subscribe.member.id = :memberId', { memberId })
       .getOne();
 
-    subscribe.unsubscribe();
+    if (subscribe === null) {
+      throw new BadRequestException('잘못 된 요청입니다.');
+    }
 
-    await this.memberSchoolPageSubscribeRepository.update(
-      {
-        id: subscribe.id,
-      },
-      {
-        unsubscribedAt: subscribe.unsubscribedAt,
-        status: subscribe.status,
-      },
-    );
+    subscribe.unsubscribe();
+    await this.memberSchoolPageSubscribeRepository.save(subscribe);
   }
 
   findSchoolPagesSubscribed(page: number, size: number, memberId: number) {
