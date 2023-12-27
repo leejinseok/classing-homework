@@ -12,6 +12,8 @@ import {
 import { SchoolPageNewsController } from './school-page-news.controller';
 import { SchoolPageNewsService } from './school-page-news.service';
 import { CommonStatus } from '../../../core/db/database.common.entity';
+import { DateUtils } from '../../../common/util/data.utils';
+import { JwtPayload } from '../auth/dto/jwt-payload';
 
 class MockSchoolPageNewsService {
   findSchoolPageNewsPage = jest.fn();
@@ -23,6 +25,12 @@ class MockSchoolPageNewsService {
 describe('SchoolPageNewsController', () => {
   let controller: SchoolPageNewsController;
   let service: SchoolPageNewsService;
+  const authenticated = {
+    sub: 1,
+    name: '',
+    exp: DateUtils.addHours(new Date(), 1).getTime(),
+    iat: new Date().getTime(),
+  } as JwtPayload;
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
@@ -121,7 +129,10 @@ describe('SchoolPageNewsController', () => {
 
     jest.spyOn(service, 'save').mockResolvedValue(schoolPageNews);
 
-    const response = await controller.createShoolPageNews(request, req);
+    const response = await controller.createShoolPageNews(
+      request,
+      authenticated,
+    );
     expect(service.save).toHaveBeenCalledWith(request, req.user.sub);
     expect(response.id).toEqual(schoolPageNews.id);
     expect(response.content).toEqual(schoolPageNews.content);
@@ -162,7 +173,7 @@ describe('SchoolPageNewsController', () => {
     const response = await controller.updateSchoolPageNews(
       schoolPageNews.id,
       request,
-      req,
+      authenticated,
     );
     expect(service.update).toHaveBeenCalledWith(
       schoolPageNews.id,
@@ -181,11 +192,7 @@ describe('SchoolPageNewsController', () => {
     jest.spyOn(service, 'delete');
     const schoolPageNewsId = 1;
     const memberId = 1;
-    await controller.delete(schoolPageNewsId, {
-      user: {
-        sub: memberId,
-      },
-    });
+    await controller.delete(schoolPageNewsId, authenticated);
 
     expect(service.delete).toHaveBeenCalledWith(schoolPageNewsId, memberId);
   });

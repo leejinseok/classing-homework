@@ -7,7 +7,6 @@ import {
   Param,
   Patch,
   Post,
-  Request,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -18,6 +17,7 @@ import {
 } from '@nestjs/swagger';
 import { MemberRole } from '../../../core/db/domain/member/member.entity';
 import { Roles } from '../../config/metadata';
+import { Authenticated } from '../auth/auth.decorator';
 import { JwtPayload } from '../auth/dto/jwt-payload';
 import { SchoolPageRequest } from './dto/school-page.request';
 import { SchoolPageResponse } from './dto/school-page.response';
@@ -35,11 +35,11 @@ export class SchoolPageController {
   @Post()
   async createShoolPage(
     @Body() schoolPageRequest: SchoolPageRequest,
-    @Request() req,
+    @Authenticated() authenticated: JwtPayload,
   ): Promise<SchoolPageResponse> {
     const schoolPage = await this.schoolPageService.save(
       schoolPageRequest,
-      req.user.sub,
+      authenticated.sub,
     );
 
     return SchoolPageResponse.create(schoolPage);
@@ -58,13 +58,12 @@ export class SchoolPageController {
   async updateSchoolPage(
     @Param('schoolPageId') schoolPageId: number,
     @Body() schoolPageRequest: SchoolPageRequest,
-    @Request() req,
+    @Authenticated() authenticated: JwtPayload,
   ): Promise<SchoolPageResponse> {
-    const user: JwtPayload = req.user;
     const schoolPage = await this.schoolPageService.update(
       schoolPageRequest,
       schoolPageId,
-      user.sub,
+      authenticated.sub,
     );
     return SchoolPageResponse.create(schoolPage);
   }
@@ -79,9 +78,8 @@ export class SchoolPageController {
   @Delete('/:schoolPageId')
   async deleteSchoolPage(
     @Param('schoolPageId') schoolPageId: number,
-    @Request() req,
+    @Authenticated() authenticated: JwtPayload,
   ) {
-    const user: JwtPayload = req.user;
-    await this.schoolPageService.delete(schoolPageId, user.sub);
+    await this.schoolPageService.delete(schoolPageId, authenticated.sub);
   }
 }

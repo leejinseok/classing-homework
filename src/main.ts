@@ -1,9 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ApiModule } from './api/api.module';
+import helmet from 'helmet';
+import * as csurf from 'csurf';
 
 async function bootstrap() {
   const app = await NestFactory.create(ApiModule);
+  app.use(helmet());
+  app.enableCors();
+  app.use(csurf());
 
   const setUpSwagger = () => {
     const config = new DocumentBuilder()

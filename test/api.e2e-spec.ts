@@ -143,7 +143,7 @@ describe('ApiModule (e2e)', () => {
         });
     });
 
-    it(`${basePath}/:schooPageId (PATCH)`, async () => {
+    it(`${basePath}/:schoolPageId (PATCH)`, async () => {
       const schoolPageRequest = new SchoolPageRequest();
       schoolPageRequest.schoolName = '변경된 학교 이름';
       schoolPageRequest.region = '경기도';

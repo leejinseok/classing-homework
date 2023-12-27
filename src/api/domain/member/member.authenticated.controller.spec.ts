@@ -1,16 +1,18 @@
 import { Test } from '@nestjs/testing';
 import { BcryptUtils } from '../../../common/util/bcrypt.util';
+import { DateUtils } from '../../../common/util/data.utils';
 import { EncryptUtils } from '../../../common/util/encrypt.util';
 import { MemberSchoolPageSubscribe } from '../../../core/db/domain/member/member-schoolPage-subscribe.entity';
 import {
   Member,
   MemberRole,
 } from '../../../core/db/domain/member/member.entity';
+import { SchoolPageNews } from '../../../core/db/domain/school-page-news/school-page-news.entity';
 import { SchoolPage } from '../../../core/db/domain/school-page/school-page.entity';
 import { API_EXAMPLE } from '../../config/constants';
-import { MemberService } from './member.service';
+import { JwtPayload } from '../auth/dto/jwt-payload';
 import { MembersAuthenticatedController } from './member.authenticated.controller';
-import { SchoolPageNews } from '../../../core/db/domain/school-page-news/school-page-news.entity';
+import { MemberService } from './member.service';
 
 class MockMemberService {
   findById = jest.fn();
@@ -23,6 +25,12 @@ class MockMemberService {
 describe('MemberAuthenticatedControllerTest', () => {
   let controller: MembersAuthenticatedController;
   let memberService: MemberService;
+  const authenticated = {
+    sub: 1,
+    name: '',
+    exp: DateUtils.addHours(new Date(), 1).getTime(),
+    iat: new Date().getTime(),
+  } as JwtPayload;
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
@@ -58,7 +66,7 @@ describe('MemberAuthenticatedControllerTest', () => {
     me.updatedAt = new Date();
 
     jest.spyOn(memberService, 'findById').mockResolvedValue(me);
-    const response = await controller.getMe({ user: { sub: me.id } });
+    const response = await controller.getMe(authenticated);
     expect(memberService.findById).toHaveBeenCalledWith(me.id);
     expect(response.id).toEqual(me.id);
     expect(response.email).toEqual(API_EXAMPLE.STUDENT_EMAIL);
@@ -71,18 +79,11 @@ describe('MemberAuthenticatedControllerTest', () => {
   it('학교페이지 구독', async () => {
     const schoolPage = new SchoolPage();
     schoolPage.id = 1;
-
-    const req = {
-      user: {
-        sub: 1,
-      },
-    };
-
     jest.spyOn(memberService, 'subscribeSchoolPage');
-    await controller.subscribeSchoolPage(schoolPage.id, req);
+    await controller.subscribeSchoolPage(schoolPage.id, authenticated);
     expect(memberService.subscribeSchoolPage).toHaveBeenCalledWith(
       schoolPage.id,
-      req.user.sub,
+      authenticated.sub,
     );
   });
 
@@ -96,7 +97,7 @@ describe('MemberAuthenticatedControllerTest', () => {
     };
 
     jest.spyOn(memberService, 'unsubscribeSchoolPage');
-    await controller.unsubscribeSchoolPage(schoolPage.id, req);
+    await controller.unsubscribeSchoolPage(schoolPage.id, authenticated);
     expect(memberService.unsubscribeSchoolPage).toHaveBeenCalledWith(
       schoolPage.id,
       req.user.sub,
@@ -109,12 +110,6 @@ describe('MemberAuthenticatedControllerTest', () => {
 
     const page = 0;
     const size = 10;
-    const req = {
-      user: {
-        sub: me.id,
-      },
-    };
-
     const memberShoolPageSubscribedList: MemberSchoolPageSubscribe[] = [];
     for (let i = 0; i < size; i++) {
       const schoolPage = new SchoolPage();
@@ -137,7 +132,11 @@ describe('MemberAuthenticatedControllerTest', () => {
       .spyOn(memberService, 'findSchoolPagesSubscribed')
       .mockResolvedValue([memberShoolPageSubscribedList, total]);
 
-    const result = await controller.getSchoolPagesSubscribed(page, size, req);
+    const result = await controller.getSchoolPagesSubscribed(
+      page,
+      size,
+      authenticated,
+    );
     expect(memberService.findSchoolPagesSubscribed).toHaveBeenCalledWith(
       page,
       size,
@@ -181,9 +180,11 @@ describe('MemberAuthenticatedControllerTest', () => {
     jest
       .spyOn(memberService, 'findSchoolPageNewsSubscribed')
       .mockResolvedValue([schoolPageNewsList, total]);
-    const result = await controller.getSchoolPageNews(page, size, {
-      user: { sub: me.id },
-    });
+    const result = await controller.getSchoolPageNews(
+      page,
+      size,
+      authenticated,
+    );
 
     expect(memberService.findSchoolPageNewsSubscribed).toHaveBeenCalledWith(
       me.id,

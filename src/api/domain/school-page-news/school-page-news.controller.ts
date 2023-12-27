@@ -9,7 +9,6 @@ import {
   Patch,
   Post,
   Query,
-  Request,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -23,6 +22,7 @@ import { PageResponse } from '../../../common/dto/page.response';
 import { MemberRole } from '../../../core/db/domain/member/member.entity';
 import { Roles } from '../../config/metadata';
 import { ApiResponsePaginated } from '../../config/paginated';
+import { Authenticated } from '../auth/auth.decorator';
 import { JwtPayload } from '../auth/dto/jwt-payload';
 import {
   SchoolPageNewsRequest,
@@ -77,12 +77,11 @@ export class SchoolPageNewsController {
   @Post()
   async createShoolPageNews(
     @Body() schoolPageNewsRequest: SchoolPageNewsRequest,
-    @Request() req,
+    @Authenticated() authenticated: JwtPayload,
   ): Promise<SchoolPageNewsResponse> {
-    const user: JwtPayload = req.user;
     const schoolPageNews = await this.schoolPageNewsService.save(
       schoolPageNewsRequest,
-      user.sub,
+      authenticated.sub,
     );
 
     return SchoolPageNewsResponse.create(schoolPageNews);
@@ -101,13 +100,12 @@ export class SchoolPageNewsController {
   async updateSchoolPageNews(
     @Param('schoolPageNewsId') schoolPageNewsId: number,
     @Body() schoolPageNewsUpdateRequest: SchoolPageNewsUpdateRequest,
-    @Request() req,
+    @Authenticated() authenticated: JwtPayload,
   ): Promise<SchoolPageNewsResponse> {
-    const user: JwtPayload = req.user;
     const schoolPageNews = await this.schoolPageNewsService.update(
       schoolPageNewsId,
       schoolPageNewsUpdateRequest,
-      user.sub,
+      authenticated.sub,
     );
     return SchoolPageNewsResponse.create(schoolPageNews);
   }
@@ -122,9 +120,11 @@ export class SchoolPageNewsController {
   @Delete('/:schoolPageNewsId')
   async delete(
     @Param('schoolPageNewsId') schoolPageNewsId: number,
-    @Request() req,
+    @Authenticated() authenticated: JwtPayload,
   ) {
-    const user: JwtPayload = req.user;
-    await this.schoolPageNewsService.delete(schoolPageNewsId, user.sub);
+    await this.schoolPageNewsService.delete(
+      schoolPageNewsId,
+      authenticated.sub,
+    );
   }
 }

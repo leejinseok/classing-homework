@@ -62,6 +62,14 @@ describe('MemberService', () => {
     );
   });
 
+  it('주입확인', () => {
+    expect(service).toBeDefined();
+    expect(memberRepository).toBeDefined();
+    expect(memberSchoolPageSubscribeRepository).toBeDefined();
+    expect(schoolPageRepository).toBeDefined();
+    expect(schoolPageNewsRepository).toBeDefined();
+  });
+
   it('학교페이지 구독', async () => {
     const me = new Member();
     me.id = 1;

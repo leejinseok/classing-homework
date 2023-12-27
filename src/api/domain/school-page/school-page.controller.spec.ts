@@ -6,6 +6,8 @@ import { API_EXAMPLE } from '../../config/constants';
 import { SchoolPageRequest } from './dto/school-page.request';
 import { SchoolPageController } from './school-page.controller';
 import { SchoolPageService } from './school-page.service';
+import { JwtPayload } from '../auth/dto/jwt-payload';
+import { DateUtils } from '../../../common/util/data.utils';
 
 class MockSchoolPageService {
   save = jest.fn();
@@ -16,6 +18,12 @@ class MockSchoolPageService {
 describe('SchoolPageController', () => {
   let controller: SchoolPageController;
   let service: SchoolPageService;
+  const authenticated = {
+    sub: 1,
+    name: '',
+    exp: DateUtils.addHours(new Date(), 1).getTime(),
+    iat: new Date().getTime(),
+  } as JwtPayload;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -51,13 +59,10 @@ describe('SchoolPageController', () => {
     jest.spyOn(service, 'save').mockResolvedValue(schoolPageMockValue);
 
     const schoolPageRequest = expect.any(SchoolPageRequest);
-    const req = {
-      user: {
-        sub: 1,
-      },
-    };
-
-    const response = await controller.createShoolPage(schoolPageRequest, req);
+    const response = await controller.createShoolPage(
+      schoolPageRequest,
+      authenticated,
+    );
     expect(response.id).toEqual(schoolPageMockValue.id);
     expect(response.schoolName).toEqual(schoolPageMockValue.schoolName);
     expect(response.region).toEqual(schoolPageMockValue.region);
@@ -77,18 +82,12 @@ describe('SchoolPageController', () => {
     schoolPageMockValue.updatedAt = new Date();
 
     const schoolPageRequest = expect.any(SchoolPageRequest);
-    const req = {
-      user: {
-        sub: 1,
-      },
-    };
-
     jest.spyOn(service, 'update').mockResolvedValue(schoolPageMockValue);
 
     const response = await controller.updateSchoolPage(
       1,
       schoolPageRequest,
-      req,
+      authenticated,
     );
     expect(response.id).toEqual(schoolPageMockValue.id);
     expect(response.schoolName).toEqual(schoolPageMockValue.schoolName);
@@ -98,13 +97,7 @@ describe('SchoolPageController', () => {
   });
 
   it('학교페이지 삭제', async () => {
-    const req = {
-      user: {
-        sub: 1,
-      },
-    };
-
     jest.spyOn(service, 'delete').mockResolvedValue();
-    await controller.deleteSchoolPage(1, req);
+    await controller.deleteSchoolPage(1, authenticated);
   });
 });
