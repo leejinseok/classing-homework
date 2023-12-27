@@ -1,19 +1,18 @@
 import { Test } from '@nestjs/testing';
+import { CommonStatus } from '../../../core/db/database.common.entity';
 import {
   Member,
   MemberRole,
 } from '../../../core/db/domain/member/member.entity';
 import { SchoolPageNews } from '../../../core/db/domain/school-page-news/school-page-news.entity';
 import { SchoolPage } from '../../../core/db/domain/school-page/school-page.entity';
+import { JwtPayload } from '../auth/dto/jwt-payload';
 import {
   SchoolPageNewsRequest,
   SchoolPageNewsUpdateRequest,
 } from './dto/school-page-news.request';
 import { SchoolPageNewsController } from './school-page-news.controller';
 import { SchoolPageNewsService } from './school-page-news.service';
-import { CommonStatus } from '../../../core/db/database.common.entity';
-import { DateUtils } from '../../../common/util/data.utils';
-import { JwtPayload } from '../auth/dto/jwt-payload';
 
 class MockSchoolPageNewsService {
   findSchoolPageNewsPage = jest.fn();
@@ -27,9 +26,6 @@ describe('SchoolPageNewsController', () => {
   let service: SchoolPageNewsService;
   const authenticated = {
     sub: 1,
-    name: '',
-    exp: DateUtils.addHours(new Date(), 1).getTime(),
-    iat: new Date().getTime(),
   } as JwtPayload;
 
   beforeEach(async () => {

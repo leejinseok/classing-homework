@@ -3,11 +3,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Member } from '../../../core/db/domain/member/member.entity';
 import { SchoolPage } from '../../../core/db/domain/school-page/school-page.entity';
 import { API_EXAMPLE } from '../../config/constants';
+import { JwtPayload } from '../auth/dto/jwt-payload';
 import { SchoolPageRequest } from './dto/school-page.request';
 import { SchoolPageController } from './school-page.controller';
 import { SchoolPageService } from './school-page.service';
-import { JwtPayload } from '../auth/dto/jwt-payload';
-import { DateUtils } from '../../../common/util/data.utils';
 
 class MockSchoolPageService {
   save = jest.fn();
@@ -20,9 +19,6 @@ describe('SchoolPageController', () => {
   let service: SchoolPageService;
   const authenticated = {
     sub: 1,
-    name: '',
-    exp: DateUtils.addHours(new Date(), 1).getTime(),
-    iat: new Date().getTime(),
   } as JwtPayload;
 
   beforeEach(async () => {

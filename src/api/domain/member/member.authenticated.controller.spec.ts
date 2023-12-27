@@ -1,6 +1,6 @@
 import { Test } from '@nestjs/testing';
 import { BcryptUtils } from '../../../common/util/bcrypt.util';
-import { DateUtils } from '../../../common/util/data.utils';
+import { DateUtils } from '../../../common/util/date.utils';
 import { EncryptUtils } from '../../../common/util/encrypt.util';
 import { MemberSchoolPageSubscribe } from '../../../core/db/domain/member/member-schoolPage-subscribe.entity';
 import {
@@ -27,9 +27,6 @@ describe('MemberAuthenticatedControllerTest', () => {
   let memberService: MemberService;
   const authenticated = {
     sub: 1,
-    name: '',
-    exp: DateUtils.addHours(new Date(), 1).getTime(),
-    iat: new Date().getTime(),
   } as JwtPayload;
 
   beforeEach(async () => {
