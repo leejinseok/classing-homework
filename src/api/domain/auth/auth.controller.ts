@@ -29,6 +29,10 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('/login')
   async login(@Body() request: LoginRequest): Promise<TokenResponse> {
+    if (request.email === 'test@a.com') {
+      throw new Error('hi');
+    }
+
     const member = await this.authService.login(request);
 
     const { id, name, role } = member;

@@ -4,6 +4,7 @@ import {
   ArgumentsHost,
   HttpException,
 } from '@nestjs/common';
+import { APP_FILTER } from '@nestjs/core';
 import { Response } from 'express';
 
 @Catch(HttpException)
@@ -19,3 +20,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
     });
   }
 }
+
+export const httpExceptionFilterProvider = {
+  provide: APP_FILTER,
+  useClass: HttpExceptionFilter,
+};

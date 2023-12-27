@@ -1,5 +1,5 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
+import { APP_GUARD, Reflector } from '@nestjs/core';
 import { MemberRole } from '../../core/db/domain/member/member.entity';
 import { ROLES_KEY } from '../config/metadata';
 
@@ -20,3 +20,8 @@ export class RolesGuard implements CanActivate {
     return requiredRoles.some((role) => user.role === role);
   }
 }
+
+export const roleGuardProvider = {
+  provide: APP_GUARD,
+  useClass: RolesGuard,
+};
