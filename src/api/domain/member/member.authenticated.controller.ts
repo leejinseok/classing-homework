@@ -74,18 +74,17 @@ export class MembersAuthenticatedController {
     @Query('size') size: number,
     @Request() req,
   ): Promise<PageResponse<SchoolPageResponse>> {
-    const schoolPagesSubscribed =
-      await this.memberService.findSchoolPagesSubscribed(
-        page,
-        size,
-        req.user.sub,
-      );
+    const [list, total] = await this.memberService.findSchoolPagesSubscribed(
+      page,
+      size,
+      req.user.sub,
+    );
 
     return new PageResponse(
-      schoolPagesSubscribed[1],
+      total,
       +page,
       +size,
-      schoolPagesSubscribed[0].map((schoolPageSubscribed) =>
+      list.map((schoolPageSubscribed) =>
         SchoolPageResponse.create(schoolPageSubscribed.schoolPage),
       ),
     );
@@ -101,14 +100,15 @@ export class MembersAuthenticatedController {
     @Query('size') size: number,
     @Request() req,
   ): Promise<PageResponse<SchoolPageNewsWithSchoolPageResponse>> {
-    const schoolPageNews =
-      await this.memberService.findSchoolPageNewsSubscribed(req.user.sub);
+    const [list, total] = await this.memberService.findSchoolPageNewsSubscribed(
+      req.user.sub,
+    );
 
     return new PageResponse(
-      schoolPageNews[1],
+      total,
       page,
       size,
-      schoolPageNews[0].map((schoolPageNews) =>
+      list.map((schoolPageNews) =>
         SchoolPageNewsWithSchoolPageResponse.create(schoolPageNews),
       ),
     );

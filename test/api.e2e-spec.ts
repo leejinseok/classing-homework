@@ -7,7 +7,10 @@ import {
   LoginRequest,
   SignUpRequest,
 } from '../src/api/domain/auth/dto/auth.reqeust';
-import { TokenResponse } from '../src/api/domain/auth/dto/auth.response';
+import {
+  SignUpResposne,
+  TokenResponse,
+} from '../src/api/domain/auth/dto/auth.response';
 import { MemberResponse } from '../src/api/domain/member/dto/member.response';
 import {
   SchoolPageNewsRequest,
@@ -55,11 +58,12 @@ describe('ApiModule (e2e)', () => {
         .send(studentSignUpRequest)
         .expect(HttpStatus.CREATED)
         .then((res) => {
-          expect(res.body.id).toBeDefined();
-          expect(res.body.email).toEqual(API_EXAMPLE.STUDENT_EMAIL);
-          expect(res.body.name).toEqual(API_EXAMPLE.STUDENT_NAME);
-          expect(res.body.role).toEqual(MemberRole.STUDENT);
-          expect(res.body.createdAt).toBeDefined();
+          const body = res.body as SignUpResposne;
+          expect(body.id).toBeDefined();
+          expect(body.email).toEqual(API_EXAMPLE.STUDENT_EMAIL);
+          expect(body.name).toEqual(API_EXAMPLE.STUDENT_NAME);
+          expect(body.role).toEqual(MemberRole.STUDENT);
+          expect(body.createdAt).toBeDefined();
         });
 
       // 관리자가입
@@ -74,11 +78,12 @@ describe('ApiModule (e2e)', () => {
         .send(adminSignUpRequest)
         .expect(HttpStatus.CREATED)
         .then((res) => {
-          expect(res.body.id).toBeDefined();
-          expect(res.body.email).toEqual(API_EXAMPLE.ADMIN_EMAIL);
-          expect(res.body.name).toEqual(API_EXAMPLE.ADMIN_NAME);
-          expect(res.body.role).toEqual(MemberRole.ADMIN);
-          expect(res.body.createdAt).toBeDefined();
+          const body = res.body as SignUpResposne;
+          expect(body.id).toBeDefined();
+          expect(body.email).toEqual(API_EXAMPLE.ADMIN_EMAIL);
+          expect(body.name).toEqual(API_EXAMPLE.ADMIN_NAME);
+          expect(body.role).toEqual(MemberRole.ADMIN);
+          expect(body.createdAt).toBeDefined();
         });
     });
 
@@ -379,6 +384,6 @@ describe('ApiModule (e2e)', () => {
           const body = res.body as PageResponse<SchoolPageNewsResponse>;
           expect(body.list.length).toEqual(1);
         });
-    }, 100000);
+    });
   });
 });

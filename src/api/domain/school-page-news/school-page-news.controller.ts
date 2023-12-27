@@ -52,7 +52,7 @@ export class SchoolPageNewsController {
     @Query('size') size: number,
     @Query('schoolPageId') schoolPageId: number,
   ): Promise<PageResponse<SchoolPageNewsResponse>> {
-    const schoolPageNewsPage =
+    const [list, total] =
       await this.schoolPageNewsService.findSchoolPageNewsPage(
         page,
         size,
@@ -60,10 +60,10 @@ export class SchoolPageNewsController {
       );
 
     const pageResponse = new PageResponse(
-      schoolPageNewsPage[1],
+      total,
       +page,
       +size,
-      schoolPageNewsPage[0].map((schoolPageNews) => {
+      list.map((schoolPageNews) => {
         return SchoolPageNewsResponse.create(schoolPageNews);
       }),
     );
