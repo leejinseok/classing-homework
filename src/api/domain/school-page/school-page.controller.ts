@@ -30,7 +30,7 @@ export class SchoolPageController {
   constructor(private readonly schoolPageService: SchoolPageService) {}
 
   @ApiOperation({ summary: '학교페이지 생성 (관리자만)' })
-  @ApiResponse({ type: SchoolPageResponse, status: 201 })
+  @ApiResponse({ type: SchoolPageResponse, status: HttpStatus.CREATED })
   @Roles(MemberRole.ADMIN)
   @Post()
   async createShoolPage(
@@ -46,7 +46,7 @@ export class SchoolPageController {
   }
 
   @ApiOperation({ summary: '학교페이지 수정 (관리자만)' })
-  @ApiResponse({ type: SchoolPageResponse, status: 201 })
+  @ApiResponse({ type: SchoolPageResponse, status: HttpStatus.CREATED })
   @ApiParam({
     name: 'schoolPageId',
     example: 1,

@@ -15,7 +15,7 @@ export class AuthController {
   ) {}
 
   @ApiOperation({ summary: '회원가입' })
-  @ApiResponse({ type: SignUpResposne, status: 201 })
+  @ApiResponse({ type: SignUpResposne, status: HttpStatus.CREATED })
   @Public()
   @Post('/sign-up')
   async signUp(@Body() request: SignUpRequest): Promise<SignUpResposne> {
@@ -24,7 +24,7 @@ export class AuthController {
   }
 
   @ApiOperation({ summary: '로그인' })
-  @ApiResponse({ type: TokenResponse, status: 200 })
+  @ApiResponse({ type: TokenResponse, status: HttpStatus.OK })
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('/login')

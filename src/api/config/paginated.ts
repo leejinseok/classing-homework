@@ -1,10 +1,10 @@
-import { Type, applyDecorators } from '@nestjs/common';
+import { HttpStatus, Type, applyDecorators } from '@nestjs/common';
 import { ApiExtraModels, ApiResponse, getSchemaPath } from '@nestjs/swagger';
 import { PageResponse } from '../../common/dto/page.response';
 
 export const ApiResponsePaginated = <Dto extends Type<unknown>>(
   dto: Dto,
-  status: number = 200,
+  status: number = HttpStatus.OK,
 ) =>
   applyDecorators(
     ApiExtraModels(PageResponse, dto),

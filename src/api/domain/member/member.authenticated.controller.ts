@@ -1,4 +1,12 @@
-import { Controller, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiOperation,
@@ -23,7 +31,7 @@ export class MembersAuthenticatedController {
   constructor(private readonly memberService: MemberService) {}
 
   @ApiOperation({ summary: '내 정보 요청' })
-  @ApiResponse({ type: MemberResponse, status: 200 })
+  @ApiResponse({ type: MemberResponse, status: HttpStatus.OK })
   @Get('/me')
   async getMe(
     @Authenticated() authenticated: JwtPayload,
