@@ -163,6 +163,43 @@ describe('ApiModule (e2e)', () => {
         });
     });
 
+    it(`${basePath} (GET)`, async () => {
+      const page = 0;
+      const pageSize = 10;
+      return request(app.getHttpServer())
+        .get(`${basePath}?page=${page}&size=${pageSize}`)
+        .set('Authorization', 'Bearer ' + adminAccessToken)
+        .expect(HttpStatus.OK)
+        .then((res) => {
+          const body = res.body as PageResponse<SchoolPageResponse>;
+          expect(body.page.currentPage).toEqual(page);
+          expect(body.page.pageSize).toEqual(pageSize);
+          expect(body.page.totalCount).toBeDefined();
+          expect(body.page.totalPage).toBeDefined();
+          expect(body.list).toBeDefined();
+          expect(body.list[0].id).toBeDefined();
+          expect(body.list[0].schoolName).toBeDefined();
+          expect(body.list[0].region).toBeDefined();
+          expect(body.list[0].createdAt).toBeDefined();
+          expect(body.list[0].updatedAt).toBeDefined();
+        });
+    });
+
+    it(`${basePath}/:schoolPageId (GET)`, async () => {
+      return request(app.getHttpServer())
+        .get(`${basePath}/${schoolPageResponse.id}`)
+        .set('Authorization', 'Bearer ' + adminAccessToken)
+        .expect(HttpStatus.OK)
+        .then((res) => {
+          const body = res.body as SchoolPageResponse;
+          expect(body.id).toEqual(schoolPageResponse.id);
+          expect(body.schoolName).toBeDefined();
+          expect(body.region).toBeDefined();
+          expect(body.createdAt).toBeDefined();
+          expect(body.updatedAt).toBeDefined();
+        });
+    });
+
     it(`${basePath}/:schoolPageId (DELETE)`, async () => {
       const schoolPageRequest = new SchoolPageRequest();
       schoolPageRequest.schoolName = '삭제할 학교';

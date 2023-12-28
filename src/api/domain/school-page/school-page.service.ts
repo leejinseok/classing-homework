@@ -87,6 +87,16 @@ export class SchoolPageService {
     return schoolPage;
   }
 
+  findSchoolPages(page: number, size: number) {
+    return this.schoolPageRepository
+      .createQueryBuilder('schoolPage')
+      .select(['schoolPage'])
+      .offset(page * size)
+      .limit(size)
+      .orderBy('schoolPage.createdAt', 'DESC')
+      .getManyAndCount();
+  }
+
   async delete(schoolPageId: number, memberId: number) {
     const schoolPage = await this.findOnlyActiveById(schoolPageId);
 

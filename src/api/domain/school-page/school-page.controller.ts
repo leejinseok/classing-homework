@@ -2,16 +2,19 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   HttpCode,
   HttpStatus,
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiOperation,
   ApiParam,
+  ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -22,6 +25,8 @@ import { JwtPayload } from '../auth/dto/jwt-payload';
 import { SchoolPageRequest } from './dto/school-page.request';
 import { SchoolPageResponse } from './dto/school-page.response';
 import { SchoolPageService } from './school-page.service';
+import { ApiResponsePaginated } from '../../config/paginated';
+import { PageResponse } from '../../../common/dto/page.response';
 
 @ApiTags('학교페이지 (SchoolPage)')
 @ApiBearerAuth()
@@ -65,6 +70,40 @@ export class SchoolPageController {
       schoolPageId,
       authenticated.sub,
     );
+    return SchoolPageResponse.create(schoolPage);
+  }
+
+  @ApiOperation({ summary: '학교페이지 조회 (목록)' })
+  @ApiResponsePaginated(SchoolPageResponse)
+  @ApiQuery({ name: 'page', example: 0 })
+  @ApiQuery({ name: 'size', example: 10 })
+  @Roles(MemberRole.ADMIN)
+  @Get()
+  async getSchoolPages(
+    @Query('page') page: number,
+    @Query('size') size: number,
+  ) {
+    const [list, total] = await this.schoolPageService.findSchoolPages(
+      page,
+      size,
+    );
+
+    return new PageResponse(
+      total,
+      +page,
+      +size,
+      list.map((schoolPage) => SchoolPageResponse.create(schoolPage)),
+    );
+  }
+
+  @ApiOperation({ summary: '학교페이지 조회 (단건)' })
+  @ApiResponsePaginated(SchoolPageResponse)
+  @Roles(MemberRole.ADMIN)
+  @Get('/:schoolPageId')
+  async getSchoolPage(@Param('schoolPageId') schoolPageId: number) {
+    const schoolPage =
+      await this.schoolPageService.findOnlyActiveById(schoolPageId);
+
     return SchoolPageResponse.create(schoolPage);
   }
 
