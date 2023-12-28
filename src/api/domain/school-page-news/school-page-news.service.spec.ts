@@ -22,7 +22,6 @@ class MockRepository {
 describe('SchoolPageNewsService', () => {
   let service: SchoolPageNewsService;
   let schoolPageNewsRepository: Repository<SchoolPageNews>;
-  let schoolPageRepository: Repository<SchoolPage>;
   let memberRepository: Repository<Member>;
 
   beforeEach(async () => {
@@ -46,10 +45,6 @@ describe('SchoolPageNewsService', () => {
     service = module.get<SchoolPageNewsService>(SchoolPageNewsService);
     schoolPageNewsRepository = module.get<Repository<SchoolPageNews>>(
       getRepositoryToken(SchoolPageNews),
-    );
-
-    schoolPageRepository = module.get<Repository<SchoolPage>>(
-      getRepositoryToken(SchoolPage),
     );
 
     memberRepository = module.get<Repository<Member>>(

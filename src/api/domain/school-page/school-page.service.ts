@@ -65,6 +65,7 @@ export class SchoolPageService {
     }
 
     schoolPage.update(request.schoolName, request.region);
+    await this.schoolPageRepository.save(schoolPage);
     return schoolPage;
   }
 
